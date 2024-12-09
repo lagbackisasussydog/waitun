@@ -1,28 +1,18 @@
 local plr = game.Players.LocalPlayer
-local char = plr.Character
-local map = Workspace.Map
-local e = Workspace.Enemies
 
-local data = plr:FindFirstChild("Data")
-local combat = plr.Backpack:FindFirstChild("Dragon Talon")
+local gui = Instance.new("ScreenGui",plr.PlayerGui)
+local frame = Instance.new("Frame",gui)
+local textLabel = Instance.new("TextLabel",frame)
 
-local root = char.PrimaryPart
+gui.ResetOnSpawn = false
 
-plr.Character.Humanoid:EquipTool(combat)
+frame.AnchorPoint = Vector2.new(.5,.5)
+frame.Size = UDim2.new(0,250,0,100)
+frame.Position = UDim2.new(0.5,0,0.5,0)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/click.lua"))()
-
-for i,v in pairs(e:GetChildren()) do
-    local eroot = v.PrimaryPart
-
-    while task.wait(2) do
-        root.Anchored = false
-        local track = game.TweenService:Create(root,TweenInfo.new(),{CFrame = v:GetPivot() * CFrame.new(0,15,0)})
-        track:Play()
-        track.Completed:Wait()
-        root.Anchored = true
-        eroot.Size = Vector3.new(25,25,25)
-        eroot.Anchored = true
-        v.Humanoid.Died:Wait()
-    end
-end
+textLabel.AnchorPoint = Vector2.new(.5,.5)
+textLabel.Size = UDim2.new(0,50,0,50)
+textLabel.Position = UDim2.new(0.5,0,0.5,0)
+textLabel.BackgroundTransparency = 1
+textLabel.TextColor3 = Color3.fromRGB(255,255,255)
+textLabel.Text = "Go sleep"
