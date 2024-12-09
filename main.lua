@@ -12,11 +12,10 @@ wait(5)
 plr.Character.Humanoid:EquipTool(combat)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/click.lua"))()
 
-while true do
-    for i,v in pairs(e:GetChildren()) do
-        local eroot = v.PrimaryPart
+for i,v in pairs(e:GetChildren()) do
+    local eroot = v.PrimaryPart
 
-        task.wait(2)
+    while task.wait(2) do
         root.Anchored = false
         local track = game.TweenService:Create(root,TweenInfo.new(),{CFrame = v:GetPivot() * CFrame.new(0,15,0)})
         track:Play()
