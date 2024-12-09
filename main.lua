@@ -8,9 +8,8 @@ local combat = plr.Backpack:FindFirstChild("Dragon Talon")
 
 local root = char.PrimaryPart
 
-wait(5)
+keypress(0x4a)
 plr.Character.Humanoid:EquipTool(combat)
-
 
 for i,v in pairs(e:GetChildren()) do
     local eroot = v.PrimaryPart
