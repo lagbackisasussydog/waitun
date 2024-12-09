@@ -10,7 +10,7 @@ local root = char.PrimaryPart
 
 wait(5)
 plr.Character.Humanoid:EquipTool(combat)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/click.lua"))()
+
 
 for i,v in pairs(e:GetChildren()) do
     local eroot = v.PrimaryPart
@@ -26,3 +26,5 @@ for i,v in pairs(e:GetChildren()) do
         v.Humanoid.Died:Wait()
     end
 end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/click.lua"))()
