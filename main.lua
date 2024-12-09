@@ -10,6 +10,7 @@ local root = char.PrimaryPart
 
 wait(5)
 plr.Character.Humanoid:EquipTool(combat)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/click.lua"))()
 
 while true do
     for i,v in pairs(e:GetChildren()) do
