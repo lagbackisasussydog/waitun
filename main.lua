@@ -1,3 +1,9 @@
+if game.PlaceId ~= 2753915549 then script:Destroy() end
+
+repeat
+    wait()
+until game:IsLoaded()
+
 getgenv().Team = "Pirates"
 
 local plr = game.Players.LocalPlayer
