@@ -23,9 +23,7 @@ while true do
         root.Anchored = true
         wait(1)
         repeat
-            mouse1press()
-            wait(.01)
-            mouse1release()
+            mouse1click()
         until v.Humanoid.Health == 0
     end
 end
