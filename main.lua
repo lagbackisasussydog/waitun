@@ -27,6 +27,8 @@ end
 while wait(.1) do
     for i,v in pairs(e:GetChildren()) do
 
+        root.Anchored = false
+        
         local eroot = v.PrimaryPart
         
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
