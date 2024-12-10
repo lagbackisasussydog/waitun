@@ -11,6 +11,12 @@ local root = char.PrimaryPart
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
+function Tween(inst,cframe)
+    local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
+    track:Play()
+    track.Completed:Wait()
+end
+
 while true do
     for i,v in pairs(e:GetChildren()) do
 
@@ -26,10 +32,4 @@ while true do
             mouse1click()
         until v.Humanoid.Health == 0
     end
-end
-
-function Tween(inst,cframe)
-    local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
-    track:Play()
-    track.Completed:Wait()
 end
