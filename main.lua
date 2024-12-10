@@ -1,3 +1,5 @@
+getgenv().Team = "Pirates"
+
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local map = Workspace.Map
@@ -11,6 +13,9 @@ local root = char.PrimaryPart
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
+wait(1)
+keypress(0x4A)
+
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
     track:Play()
@@ -23,9 +28,8 @@ while true do
         local eroot = v.PrimaryPart
         
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
-        root.Anchored = false
         eroot.Size = Vector3.new(50,50,50)
-        eroot.Anchored = true      
+        eroot.Anchored = true
         root.Anchored = true
         wait(1)
         repeat
