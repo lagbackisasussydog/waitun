@@ -1,18 +1,37 @@
 local plr = game.Players.LocalPlayer
+local char = plr.Character
+local map = Workspace.Map
+local e = Workspace.Enemies
 
-local gui = Instance.new("ScreenGui",plr.PlayerGui)
-local frame = Instance.new("Frame",gui)
-local textLabel = Instance.new("TextLabel",frame)
+local data = plr:FindFirstChild("Data")
+local combat = plr.Backpack:FindFirstChild("Cursed Dual Katana")
 
-gui.ResetOnSpawn = false
+local root = char.PrimaryPart
 
-frame.AnchorPoint = Vector2.new(.5,.5)
-frame.Size = UDim2.new(0,250,0,100)
-frame.Position = UDim2.new(0.5,0,0.5,0)
+root.Transparency = 0
+plr.Character.Humanoid:EquipTool(combat)
 
-textLabel.AnchorPoint = Vector2.new(.5,.5)
-textLabel.Size = UDim2.new(0,50,0,50)
-textLabel.Position = UDim2.new(0.5,0,0.5,0)
-textLabel.BackgroundTransparency = 1
-textLabel.TextColor3 = Color3.fromRGB(255,255,255)
-textLabel.Text = "Go sleep"
+while true do
+    for i,v in pairs(e:GetChildren()) do
+
+        local eroot = v.PrimaryPart
+        
+        Tween(root,eroot.CFrame * CFrame.new(0,30,0))
+        root.Anchored = false
+        eroot.Size = Vector3.new(50,50,50)
+        eroot.Anchored = true      
+        root.Anchored = true
+        wait(1)
+        repeat
+            mouse1press()
+            wait(.01)
+            mouse1release()
+        until v.Humanoid.Health == 0
+    end
+end
+
+function Tween(inst,cframe)
+    local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
+    track:Play()
+    track.Completed:Wait()
+end
