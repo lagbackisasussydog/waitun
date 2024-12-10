@@ -1,5 +1,11 @@
-this thing's sh
+# Waitun
 
-This script allows you to increase level by time
+Most simple blox fruits autofarm script
 
-Only in blox fruits
+don't complain why it's bad
+
+But anyways, this script is open-source so feel free to skid
+
+---
+
+Here's the script:
