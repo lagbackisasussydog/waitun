@@ -4,8 +4,6 @@ repeat
     wait()
 until game:IsLoaded()
 
-getgenv().Team = "Pirates"
-
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local map = Workspace.Map
