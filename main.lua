@@ -10,7 +10,9 @@ local map = Workspace.Map
 local e = Workspace.Enemies
 
 local data = plr:FindFirstChild("Data")
-local combat = plr.Backpack[1]
+local backpack = plr.Backpack:GetChildren()
+
+local combat = backpack[1]
 
 local root = char.PrimaryPart
 
