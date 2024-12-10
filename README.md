@@ -1,6 +1,6 @@
 # Waitun
 
-Most simple blox fruits autofarm script
+The most simple blox fruits auto mastery farm script
 
 don't complain why it's bad
 
