@@ -19,9 +19,6 @@ local root = char.PrimaryPart
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
-wait(1)
-keypress(0x4A)
-
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
     track:Play()
