@@ -19,7 +19,7 @@ local root = char.PrimaryPart
 plr.Character.Humanoid:EquipTool(combat)
 
 function Tween(inst,cframe)
-    local track = game.TweenService:Create(inst,TweenInfo.new(),{CFrame = cframe})
+    local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
 end
