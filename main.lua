@@ -12,11 +12,10 @@ local map = Workspace.Map
 local e = Workspace.Enemies
 
 local data = plr:FindFirstChild("Data")
-local combat = plr.Backpack:FindFirstChild("Cursed Dual Katana")
+local combat = plr.Backpack[1]
 
 local root = char.PrimaryPart
 
-root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
 function Tween(inst,cframe)
@@ -25,7 +24,7 @@ function Tween(inst,cframe)
     track.Completed:Wait()
 end
 
-while true do
+while wait(.1) do
     for i,v in pairs(e:GetChildren()) do
 
         local eroot = v.PrimaryPart
