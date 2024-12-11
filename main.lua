@@ -7,7 +7,7 @@ until game:IsLoaded()
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local map = Workspace.Map
-local e = Workspace.Enemies
+local enemies = Workspace.Enemies
 
 local data = plr:FindFirstChild("Data")
 local backpack = plr.Backpack:GetChildren()
@@ -65,7 +65,7 @@ function Tween(inst,cframe)
 end
 
 while wait(.1) do
-    for i,v in pairs(e:GetChildren()) do
+    for i,v in pairs(enemies:GetChildren()) do
 
         root.Anchored = false
         
