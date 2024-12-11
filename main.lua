@@ -59,22 +59,23 @@ root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
 function Tween(inst,cframe)
+    local force = Instance.new("BodyVelocity",root)
+    force.MaxForce = Vector3.new(100,100,100)
+    force.Velocity = Vector3.new(0,0,0)
     local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
+    force:Destroy()
 end
 
 while wait(.1) do
     for i,v in pairs(enemies:GetChildren()) do
-
-        root.Anchored = false
         
         local eroot = v.PrimaryPart
         
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
         eroot.Size = Vector3.new(50,50,50)
         eroot.Anchored = true
-        root.Anchored = true
         wait(1)
         repeat
             mouse1click()
