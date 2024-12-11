@@ -71,9 +71,8 @@ function Tween(inst,cframe)
 end
 
 while wait(.1) do
-    if e then return end
     for i,v in pairs(enemies:GetChildren()) do
-        
+        if e then return end
         local eroot = v.PrimaryPart
 
         root.Anchored = false
