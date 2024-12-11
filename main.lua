@@ -54,7 +54,6 @@ char.Humanoid.HealthChanged:Connect(function(h)
         e = false
     end
 end)
-
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
@@ -66,13 +65,16 @@ function Tween(inst,cframe)
     track:Play()
     track.Completed:Wait()
     force:Destroy()
+    root.Anchored = true
 end
 
 while wait(.1) do
+    if e then return end
     for i,v in pairs(enemies:GetChildren()) do
         
         local eroot = v.PrimaryPart
-        
+
+        root.Anchored = false
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
         eroot.Size = Vector3.new(50,50,50)
         eroot.Anchored = true
