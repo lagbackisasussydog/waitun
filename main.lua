@@ -38,11 +38,9 @@ btn.MouseButton1Up:Connect(function()
 
     if e then
         btn.Text = "Start"
-        script.Enabled = false
         btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
     else
         btn.Text = "Stop"
-        script.Enabled = true
         btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
     end
 end)
