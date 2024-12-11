@@ -17,4 +17,14 @@ btn.Text = "Stop"
 
 btn.MouseButton1Up:Connect(function()
     e = not e
+
+    if e then
+        btn.Text = "Start"
+        getscript().Enabled = false
+        btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+    else
+        btn.Text = "Start"
+        getscript().Enabled = true
+        btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+    end
 end)
