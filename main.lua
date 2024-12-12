@@ -46,12 +46,13 @@ end)
 
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
+keypress(106)
 
-local force = Instance.new("BodyVelocity")
-force.MaxForce = Vector3.new(0,9999,0)
-force.Velocity = Vector3.new(0,0,0)
+local att = Instance.new("Attachment",root)
 
-force.Parent = root
+local vforce = Instance.new("VectorForce",att)
+vfrorce.ApplyAtCenterOfMass = true
+vforce.Force = Vector3.new(0,workspace.Gravity * root:GetMass() * 0,0)
 
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
