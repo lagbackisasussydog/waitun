@@ -47,6 +47,13 @@ end)
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
+local att = Instance.new("Attachment",root)
+
+local align = Instance.new("AlignPosition",att)
+align.Mode = Enum.PositionAlignmentMode.OneAttachment
+align.Attachment0 = att
+align.MaxForce = 10000000000000000000000
+
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(1,Enum.EasingStyle.Sine),{CFrame = cframe})
     track:Play()
@@ -54,21 +61,8 @@ function Tween(inst,cframe)
     root.Anchored = true
 end
 
-function anchor(part)
-    local clone = part:Clone()
-    clone.CFrame = part.CFrame
-    clone.Anchored = true
-    clone.Transparency = 0
-    clone.Parent = Workspace
-    
-    local weld = Instance.new("WeldConstraint",clone)
-    weld.Part0 = clone
-    weld.Part1 = part
-
-    game.Debris:AddItem(clone,8)
-end
-
 while task.wait(.1) do
+    align.Position = root.Position
     for i,v in pairs(enemies:GetChildren()) do
         local eroot = v.PrimaryPart
 
