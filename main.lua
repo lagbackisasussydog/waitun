@@ -103,7 +103,7 @@ TextLabel_2.TextSize = 20.000
 TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
 
-game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear,{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)})
+game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear,{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)}):Play()
 
 local att = Instance.new("Attachment",root)
 
