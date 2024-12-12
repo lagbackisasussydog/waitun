@@ -22,28 +22,17 @@ local plrgui = game.Players.LocalPlayer.PlayerGui
 
 local e = false
 
-local gui = Instance.new("ScreenGui",plrgui)
-gui.ResetOnSpawn = false
+game:GetService("UserInputService").InputBegan:Connect(function(inp,proc)
+    if proc then return end
 
-local btn = Instance.new("TextButton",gui)
-btn.Active = true
-btn.Draggable = true
+    if inp.KeyCode == Enum.KeyCode.RightControl then
+        e = not e
 
-btn.Size = UDim2.new(0,50,0,50)
-btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
-btn.TextColor3 = Color3.fromRGB(255,255,255)
-btn.TextScaled = true
-btn.Text = "Stop"
-
-btn.MouseButton1Up:Connect(function()
-    e = not e
-
-    if e then
-        btn.Text = "Start"
-        btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
-    else
-        btn.Text = "Stop"
-        btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+        if e then
+            print("stopped")
+        else
+            print("Started")
+        end
     end
 end)
 
@@ -85,5 +74,3 @@ while wait(.1) do
         until v.Humanoid.Health == 0
     end
 end
-
-
