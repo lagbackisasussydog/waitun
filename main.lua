@@ -47,6 +47,7 @@ end)
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
+local gui = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
 local Bar = Instance.new("Frame")
@@ -54,8 +55,11 @@ local TextLabel_2 = Instance.new("TextLabel")
 
 --Properties:
 
+gui.Name = "Gui"
+gui.Parent = plrgui
+
 Main.Name = "Main"
-Main.Parent = plrgui
+Main.Parent = gui
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
 Main.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
