@@ -37,6 +37,14 @@ btn.Text = "Stop"
 
 btn.MouseButton1Up:Connect(function()
     e = not e
+
+    if e then
+        btn.Text = "Start"
+        btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+    else
+        btn.Text = "Stop"
+        btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+    end
 end)
 
 char.Humanoid.HealthChanged:Connect(function(h)
@@ -47,20 +55,14 @@ char.Humanoid.HealthChanged:Connect(function(h)
     end
 end)
 
-if e then
-    btn.Text = "Start"
-    btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
-else
-    btn.Text = "Stop"
-    btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
-end
-
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
-local force = Instance.new("BodyVelocity",root)
-force.MaxForce = Vector3.new(0,999999999,0)
+local force = Instance.new("BodyVelocity")
+force.MaxForce = Vector3.new(0,9999,0)
 force.Velocity = Vector3.new(0,0,0)
+
+force.Parent = root
 
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
