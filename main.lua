@@ -58,7 +58,6 @@ function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(1,Enum.EasingStyle.Sine),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
-    root.Anchored = true
 end
 
 while task.wait(.1) do
@@ -66,10 +65,14 @@ while task.wait(.1) do
     for i,v in pairs(enemies:GetChildren()) do
         local eroot = v.PrimaryPart
 
-        root.Anchored = false
-        eroot.Anchored = true
+        local att = Instance.new("Attachment",eroot)
+
+        local align = Instance.new("AlignPosition",att)
+        align.Mode = Enum.PositionAlignmentMode.OneAttachment
+        align.Attachment0 = att
+        align.MaxForce = 10000000000000000000000
+        
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
-        root.Anchored = true
         eroot.Size = Vector3.new(50,50,50)
         repeat
             mouse1click()
