@@ -74,8 +74,8 @@ while wait(.1) do
         local eroot = v.PrimaryPart
 
         root.Anchored = false
-        Tween(root,eroot.CFrame * CFrame.new(0,30,0))
         eroot.Anchored = true
+        Tween(root,eroot.CFrame * CFrame.new(0,30,0))
         eroot.Size = Vector3.new(50,50,50)
         wait(1)
         repeat
