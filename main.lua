@@ -65,6 +65,8 @@ while wait(.1) do
         if e then return end
         local eroot = v.PrimaryPart
 
+        Tween(enemies:GetChildren()[i].PrimaryPart,TweenInfo.new(5),{CFrame = eroot.CFrame)
+        
         root.Anchored = false
         eroot.Anchored = true
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
