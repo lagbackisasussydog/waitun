@@ -46,7 +46,7 @@ end)
 
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
-keypress(106)
+--keypress(106)
 
 local att = Instance.new("Attachment",root)
 
