@@ -1,5 +1,3 @@
---if game.PlaceId ~= 2753915549 then script:Destroy() end
-
 repeat
     wait()
 until game:IsLoaded()
@@ -14,13 +12,15 @@ local enemies = Workspace.Enemies
 local data = plr:FindFirstChild("Data")
 local backpack = plr.Backpack:GetChildren()
 
-local combat = backpack[1]
+local combat = backpack[4]
 
 local root = char.PrimaryPart
 
 local plrgui = game.Players.LocalPlayer.PlayerGui
 
 local e = false
+
+local count = 0
 
 game:GetService("UserInputService").InputBegan:Connect(function(inp,proc)
     if proc then return end
@@ -46,32 +46,37 @@ end)
 
 root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
---keypress(106)
-
-local att = Instance.new("Attachment",root)
-
-local vforce = Instance.new("VectorForce",att)
-vfrorce.ApplyAtCenterOfMass = true
-vforce.Force = Vector3.new(0,workspace.Gravity * root:GetMass() * 0,0)
 
 function Tween(inst,cframe)
-    local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
+    local track = game.TweenService:Create(inst,TweenInfo.new(1,Enum.EasingStyle.Sine),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
+    root.Anchored = true
 end
 
-while wait(.1) do
+function anchor(part)
+    local clone = part:Clone()
+    clone.CFrame = part.CFrame
+    clone.Anchored = true
+    clone.Transparency = 0
+    clone.Parent = Workspace
+    
+    local weld = Instance.new("WeldConstraint",clone)
+    weld.Part0 = clone
+    weld.Part1 = part
+
+    game.Debris:AddItem(clone,8)
+end
+
+while task.wait(.1) do
     for i,v in pairs(enemies:GetChildren()) do
-        if e then return end
         local eroot = v.PrimaryPart
 
-        Tween(enemies:GetChildren()[i].PrimaryPart,TweenInfo.new(5),{CFrame = eroot.CFrame)
-        
         root.Anchored = false
         eroot.Anchored = true
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
+        root.Anchored = true
         eroot.Size = Vector3.new(50,50,50)
-        wait(1)
         repeat
             mouse1click()
         until v.Humanoid.Health == 0
