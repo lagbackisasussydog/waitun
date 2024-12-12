@@ -16,8 +16,6 @@ Here's the script: loadstring(game:HttpGet("https://raw.githubusercontent.com/la
 
 CHANGELOGS:
 
-=> Fixed inconsistency in each tweens
+=> Added AlignPosition so player don't jittery anymore
 
-=> Now doesn't rely on spectific tool's in your backpack
-
-=> Added a stop button with no purpose (somehow I tried to use "script.Enabled" in a module lol)
+=> Added new chest collector script (beta)
