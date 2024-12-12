@@ -59,8 +59,8 @@ root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
 local force = Instance.new("BodyVelocity",root)
-force.Force = Vector3.new(0,math.huge(),0)
-root.Velocity = Vector3.new(0,0,0)
+force.MaxForce = Vector3.new(0,math.huge(),0)
+force.Velocity = Vector3.new(0,0,0)
 
 function Tween(inst,cframe)
     local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
