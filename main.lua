@@ -1,4 +1,4 @@
-if game.PlaceId ~= 2753915549 then script:Destroy() end
+--if game.PlaceId ~= 2753915549 then script:Destroy() end
 
 repeat
     wait()
