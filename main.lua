@@ -59,7 +59,7 @@ root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
 local force = Instance.new("BodyVelocity",root)
-force.MaxForce = Vector3.new(0,math.huge(),0)
+force.MaxForce = Vector3.new(0,999999999,0)
 force.Velocity = Vector3.new(0,0,0)
 
 function Tween(inst,cframe)
