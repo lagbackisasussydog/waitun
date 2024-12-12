@@ -4,9 +4,7 @@ repeat
     wait()
 until game:IsLoaded()
 
-getgenv().Config = {
-    ["Team"] = "Pirates"
-}
+getgenv().Team = "Pirates"
 
 local plr = game.Players.LocalPlayer
 local char = plr.Character
@@ -37,16 +35,16 @@ btn.TextColor3 = Color3.fromRGB(255,255,255)
 btn.TextScaled = true
 btn.Text = "Stop"
 
+if e then
+    btn.Text = "Start"
+    btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+else
+    btn.Text = "Stop"
+    btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+end
+
 btn.MouseButton1Up:Connect(function()
     e = not e
-
-    if e then
-        btn.Text = "Start"
-        btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
-    else
-        btn.Text = "Stop"
-        btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
-    end
 end)
 
 char.Humanoid.HealthChanged:Connect(function(h)
@@ -60,9 +58,9 @@ root.Transparency = 0
 plr.Character.Humanoid:EquipTool(combat)
 
 function Tween(inst,cframe)
-    local force = Instance.new("BodyVelocity",root)
-    force.MaxForce = Vector3.new(100,100,100)
-    force.Velocity = Vector3.new(0,0,0)
+    local force = Instance.new("BodyForce",root)
+    force.Force = Vector3.new(100,100,100)
+    root.Velocity = Vector3.new(0,0,0)
     local track = game.TweenService:Create(inst,TweenInfo.new(5,Enum.EasingStyle.Quad),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
@@ -77,8 +75,8 @@ while wait(.1) do
 
         root.Anchored = false
         Tween(root,eroot.CFrame * CFrame.new(0,30,0))
-        eroot.Size = Vector3.new(50,50,50)
         eroot.Anchored = true
+        eroot.Size = Vector3.new(50,50,50)
         wait(1)
         repeat
             mouse1click()
