@@ -107,7 +107,7 @@ while task.wait(.01) do
 
         local eroot = v.PrimaryPart
 
-        Tween(root,v:GetPivot() * CFrame.new(0,30,0),1)
+        Tween(root,eroot:GetPivot() * CFrame.new(0,30,0),1)
         eroot.Size = Vector3.new(100,100,100)
         repeat
             root.CFrame = eroot.CFrame * CFrame.new(0,30,0)
