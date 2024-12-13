@@ -1,6 +1,6 @@
 local plr = game.Players.LocalPlayer
 
-local plrgui = game.Players.LocalPlayer.PlayerGui
+local plrgui = plr.PlayerGui
 
 local count = 0
 
@@ -87,7 +87,6 @@ while task.wait(.01) do
     local map = Workspace.Map
     local enemies = Workspace.Enemies
     
-    local data = plr:FindFirstChild("Data")
     local backpack = plr.Backpack:GetChildren()
     
     local combat = backpack[4]
