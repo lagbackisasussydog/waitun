@@ -10,7 +10,7 @@ But anyways, this script is open-source so feel free to skid
 
 Here's the script: 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/main.lua"))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/main.lua'))()
 
 ---
 
@@ -18,6 +18,4 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/wa
 
 CHANGELOGS:
 
-=> Added AlignPosition so player don't jittery anymore
-
-=> Added new chest collector script (beta)
+=> The script is broken bc my stupidity. Sorry
