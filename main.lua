@@ -12,42 +12,13 @@ local root = char.PrimaryPart
 
 local plrgui = game.Players.LocalPlayer.PlayerGui
 
-local e = false
-
 local count = 0
-
-game:GetService("UserInputService").InputBegan:Connect(function(inp,proc)
-    if proc then return end
-
-    if inp.KeyCode == Enum.KeyCode.RightControl then
-        e = not e
-
-        if e then
-            print("stopped")
-        else
-            print("Started")
-        end
-    end
-end)
-
-char.Humanoid.HealthChanged:Connect(function(h)
-    if h == 0 then
-        e = true
-        task.wait(10)
-        e = false
-    end
-end)
-
-root.Transparency = 0
-plr.Character.Humanoid:EquipTool(combat)
 
 local gui = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
 local Bar = Instance.new("Frame")
 local TextLabel_2 = Instance.new("TextLabel")
-
---Properties:
 
 gui.Name = "Gui"
 gui.Parent = plrgui
@@ -58,7 +29,7 @@ Main.AnchorPoint = Vector2.new(0.5, 0.5)
 Main.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Main.BorderSizePixel = 0
-Main.Position = UDim2.new(-0.849816144, 0, 0.850000024, 0)
+Main.Position = UDim2.new(1.849816144, 0, 0.850000024, 0)
 Main.Size = UDim2.new(0.21875, 0, 0.213219613, 0)
 
 TextLabel.Parent = Main
@@ -97,36 +68,47 @@ TextLabel_2.TextSize = 20.000
 TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
 
-game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear,{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)}):Play()
+game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)}):Play()
+task.wait(2)
+game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+game.TweenService:Create(Bar,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+game.TweenService:Create(TextLabel_2,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+game.TweenService:Create(TextLabel,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
 
 local att = Instance.new("Attachment",root)
 
 local align = Instance.new("AlignPosition",att)
 align.Mode = Enum.PositionAlignmentMode.OneAttachment
 align.Attachment0 = att
-align.MaxForce = 10000000000000000000000
+align.MaxForce = math.huge
+align.Position = root.Position
 
-function Tween(inst,cframe)
-    local track = game.TweenService:Create(inst,TweenInfo.new(1,Enum.EasingStyle.Sine),{CFrame = cframe})
+function Tween(inst,cframe,duration)
+    local track = game.TweenService:Create(inst,TweenInfo.new(duration,Enum.EasingStyle.Sine),{CFrame = cframe})
     track:Play()
     track.Completed:Wait()
+    align.Position = root.Position
 end
 
-while task.wait(.1) do
+root.Transparency = 0
+plr.Character.Humanoid:EquipTool(combat)
+
+while task.wait(.01) do
     align.Position = root.Position
     for i,v in pairs(enemies:GetChildren()) do
+
+        if not v then
+            repeat
+                wait()
+            until v
+        end
+
         local eroot = v.PrimaryPart
 
-        local att = Instance.new("Attachment",eroot)
-
-        local align = Instance.new("AlignPosition",att)
-        align.Mode = Enum.PositionAlignmentMode.OneAttachment
-        align.Attachment0 = att
-        align.MaxForce = 10000000000000000000000
-        
-        Tween(root,eroot.CFrame * CFrame.new(0,30,0))
-        eroot.Size = Vector3.new(50,50,50)
+        Tween(root,v:GetPivot() * CFrame.new(0,30,0),1)
+        eroot.Size = Vector3.new(100,100,100)
         repeat
+            root.CFrame = eroot.CFrame * CFrame.new(0,30,0)
             mouse1click()
         until v.Humanoid.Health == 0
     end
