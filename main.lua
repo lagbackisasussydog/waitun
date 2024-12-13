@@ -1,14 +1,4 @@
 local plr = game.Players.LocalPlayer
-local char = plr.Character
-local map = Workspace.Map
-local enemies = Workspace.Enemies
-
-local data = plr:FindFirstChild("Data")
-local backpack = plr.Backpack:GetChildren()
-
-local combat = backpack[4]
-
-local root = char.PrimaryPart
 
 local plrgui = game.Players.LocalPlayer.PlayerGui
 
@@ -75,7 +65,7 @@ game.TweenService:Create(Bar,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transpare
 game.TweenService:Create(TextLabel_2,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
 game.TweenService:Create(TextLabel,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
 
-local att = Instance.new("Attachment",root)
+local att = Instance.new("Attachment",plr.Character.PrimaryPart)
 
 local align = Instance.new("AlignPosition",att)
 align.Mode = Enum.PositionAlignmentMode.OneAttachment
@@ -90,10 +80,23 @@ function Tween(inst,cframe,duration)
     align.Position = root.Position
 end
 
-root.Transparency = 0
-plr.Character.Humanoid:EquipTool(combat)
 
 while task.wait(.01) do
+
+    local char = plr.Character
+    local map = Workspace.Map
+    local enemies = Workspace.Enemies
+    
+    local data = plr:FindFirstChild("Data")
+    local backpack = plr.Backpack:GetChildren()
+    
+    local combat = backpack[4]
+    
+    local root = char.PrimaryPart
+
+    root.Transparency = 0
+    plr.Character.Humanoid:EquipTool(combat)
+
     align.Position = root.Position
     for i,v in pairs(enemies:GetChildren()) do
 
