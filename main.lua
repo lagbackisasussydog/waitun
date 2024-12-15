@@ -1,39 +1,98 @@
 local plr = game.Players.LocalPlayer
+local rs = game.ReplicatedStorage
+
+rs.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/gui.lua"))()
 
 local instructions = {
-  ["Sky bandit"] = {
+  ["Sky bandits"] = {
     ["Level"] = 1,
-    ["Model"] = Workspace.Enemies:FindFirstChild("Sky Bandit")
+    ["Model"] = Workspace.Enemies:FindFirstChild("Sky Bandits"),
   },
-  ["Dark master"] = {
+  ["Dark masters"] = {
     ["Level"] = 10,
-    ["Model"] = Workspace.Enemies:FindFirstChild("Dark Master")
+    ["Model"] = Workspace.Enemies:FindFirstChild("Dark Masters"),
+  },
+  ["Military Soldier"] = {
+    ["QName"] = "MagmaQuest",
+    ["Level"] = 300,
+    ["Model"] = Workspace.Enemies:FindFirstChild("Military Soldier"),
+    ["Section"] = 1,
+  },
+  ["Military Spy"] = {
+    ["QName"] = "MagmaQuest",
+    ["Level"] = 300,
+    ["Model"] = Workspace.Enemies:FindFirstChild("Military Spy"),
+    ["Section"] = 2,
   },
 }
 
 function Tween(instance,info,property)
   local tweensvc = game:GetService("TweenService")
 
+  Anchor(instance)
   local track = tweensvc:Create(instance,info,property)
   track:Play()
+  track.Completed:Wait()
 end
 
-function fireQuestEvent(qname)
-  game:GetService("ReplicatedStorage")
+function Anchor(root)
+  local att = Instance.new("Attachment",root)
+
+  local AlignPosition = Instance.new("AlignPosition",att)
+  AlignPosition.ApplyAtCenterOfMass = true
+  AlignPosition.MaxForce = math.huge
+  AlignPosition.Position = root.Position
 end
 
-function gatherMobs(mob,gatherPosition)
+function fireQuestEvent(qname,section)
+  rs.Remotes.CommF_:InvokeServer("StartQuest",qname,section)
+end
+
+function attack(hum,mob,targetPosition)
+  Tween(plr.Character.PrimaryPart,TweenInfo.new(),{CFrame = targetPosition * CFrame.new(0,30,0)
+  mob.PrimaryPart.Size = Vector3.new(50,50,50)
+  mob.PrimaryPart.Anchored = true
+  gatherMobs(mob,targetPosition)
+  repeat
+    mouse1click()
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
+  until hum.Health == 0
+end
+
+function gatherMobs(mob,targetPosition)
   local e = Workspace.Enemies
   repeat
-    Tween(e:FindFirstChild(mob).PrimaryPart,TweenInfo.new(),{CFrame = CFrame.new(gatherPosition)})
+    Tween(e:FindFirstChild(mob).PrimaryPart,TweenInfo.new(),{CFrame = CFrame.new(targetPosition)})
   until
 end
 
-function attack(hum)
-  local char = plr.Character
-
-  repeat
-    mouse1click()
-  until hum.Health == 0
+function DoWhatISay()
+  while wait(.1) do
+  
+    local data = plr.Data
+    
+    for i,v in pairs(instructions) do
+      local mname = v.Name
+      local model = v.Model
+      local requirement = v.Level
+      local section = v.Section
+  
+      if data.Level.Value >= requirement then
+          fireQuestEvent(mname,section)
+          attack(model.Humanoid,model,model.PrimaryPart.Position)
+      end
+    end
+  end
 end
+
+DoWhatISay()
