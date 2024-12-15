@@ -18,4 +18,4 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/wa
 
 CHANGELOGS:
 
-=> The script is broken bc my stupidity. Sorry
+=> Rewriting script yay
