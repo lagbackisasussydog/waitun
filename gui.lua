@@ -54,9 +54,13 @@ TextLabel_2.TextSize = 20.000
 TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
 
-game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)}):Play()
-task.wait(2)
-game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
-game.TweenService:Create(Bar,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
-game.TweenService:Create(TextLabel_2,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
-game.TweenService:Create(TextLabel,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+function tween()
+    game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Position = UDim2.new(0.849816144, 0, 0.850000024, 0)}):Play()
+    task.wait(2)
+    game.TweenService:Create(Main,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+    game.TweenService:Create(Bar,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+    game.TweenService:Create(TextLabel_2,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+    game.TweenService:Create(TextLabel,TweenInfo.new(1,Enum.EasingStyle.Linear),{Transparency = 1}):Play()
+end
+
+task.spawn(tween)
