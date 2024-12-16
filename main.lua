@@ -1,8 +1,7 @@
 local plr = game.Players.LocalPlayer
 local rs = game.ReplicatedStorage
 
-rs.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/gui.lua"))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/gui.lua'))()
 
 local instructions = {
   ["Sky bandits"] = {
@@ -52,20 +51,10 @@ end
 function attack(hum,mob,targetPosition)
   Tween(plr.Character.PrimaryPart,TweenInfo.new(),{CFrame = targetPosition * CFrame.new(0,30,0)
   mob.PrimaryPart.Size = Vector3.new(50,50,50)
-  mob.PrimaryPart.Anchored = true
+  Anchor(mob.PrimaryPart)
   gatherMobs(mob,targetPosition)
   repeat
     mouse1click()
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
-    rs.Modules.New["Re/RegisterHit"]:FireServer(hum.Parent:FindFirstChild("Torso"))
   until hum.Health == 0
 end
 
@@ -82,7 +71,7 @@ function DoWhatISay()
     local data = plr.Data
     
     for i,v in pairs(instructions) do
-      local mname = v.Name
+      local mname = v.QName
       local model = v.Model
       local requirement = v.Level
       local section = v.Section
@@ -96,3 +85,13 @@ function DoWhatISay()
 end
 
 DoWhatISay()
+    
+local thread = task.spawn(DoWhatISay)
+    
+game:GetService("UserInputService").InputBegan:Connect(function(inp,proc)
+  if proc then return end
+
+  if inp.KeyCode == Enum.KeyCode.LeftAlt then
+    task.cancel(thread)
+  end
+end)
