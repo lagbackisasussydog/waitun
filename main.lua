@@ -49,20 +49,19 @@ function fireQuestEvent(qname,section)
 end
 
 function attack(hum,mob,targetPosition)
-  Tween(plr.Character.PrimaryPart,TweenInfo.new(),{CFrame = targetPosition * CFrame.new(0,30,0)
+  Tween(plr.Character.PrimaryPart,TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = targetPosition * CFrame.new(0,30,0)
   mob.PrimaryPart.Size = Vector3.new(50,50,50)
   Anchor(mob.PrimaryPart)
   gatherMobs(mob,targetPosition)
   repeat
+    if Workspace.Enemies:FindFirstChild(mob.Name) == nil then wait() end
     mouse1click()
   until hum.Health == 0
 end
 
 function gatherMobs(mob,targetPosition)
   local e = Workspace.Enemies
-  repeat
-    Tween(e:FindFirstChild(mob).PrimaryPart,TweenInfo.new(),{CFrame = CFrame.new(targetPosition)})
-  until
+  Tween(e:FindFirstChild(mob).PrimaryPart,TweenInfo.new(5,Enum.EasingStyle.Linear),{CFrame = CFrame.new(targetPosition)})
 end
 
 function DoWhatISay()
