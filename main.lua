@@ -1,38 +1,40 @@
 local plr = game.Players.LocalPlayer
+local char = plr.Character
 local rs = game.ReplicatedStorage
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/gui.lua'))()
 
 local instructions = {
   ["Sky bandits"] = {
-    ["Level"] = 1,
     ["Model"] = Workspace.Enemies:FindFirstChild("Sky Bandits"),
   },
   ["Dark masters"] = {
-    ["Level"] = 10,
     ["Model"] = Workspace.Enemies:FindFirstChild("Dark Masters"),
   },
   ["Military Soldier"] = {
     ["QName"] = "MagmaQuest",
-    ["Level"] = 300,
     ["Model"] = Workspace.Enemies:FindFirstChild("Military Soldier"),
     ["Section"] = 1,
   },
   ["Military Spy"] = {
     ["QName"] = "MagmaQuest",
-    ["Level"] = 300,
     ["Model"] = Workspace.Enemies:FindFirstChild("Military Spy"),
     ["Section"] = 2,
+  },
+  ["God's guard"] = {
+    ["QName"] = "SkyExp1Quest",
+    ["Model"] = Workspace.Enemies:FindFirstChild("God's Guard"),
+    ["Section"] = 1,
   },
 }
 
 function Tween(instance,info,property)
   local tweensvc = game:GetService("TweenService")
 
-  Anchor(instance)
   local track = tweensvc:Create(instance,info,property)
   track:Play()
   track.Completed:Wait()
+  wait(1)
 end
 
 function Anchor(root)
@@ -48,49 +50,59 @@ function fireQuestEvent(qname,section)
   rs.Remotes.CommF_:InvokeServer("StartQuest",qname,section)
 end
 
-function attack(hum,mob,targetPosition)
-  Tween(plr.Character.PrimaryPart,TweenInfo.new(1,Enum.EasingStyle.Linear),{CFrame = targetPosition * CFrame.new(0,30,0)
-  mob.PrimaryPart.Size = Vector3.new(50,50,50)
-  Anchor(mob.PrimaryPart)
-  gatherMobs(mob,targetPosition)
-  repeat
-    if Workspace.Enemies:FindFirstChild(mob.Name) == nil then wait() end
-    mouse1click()
-  until hum.Health == 0
+function Attack(model)
+  local reghit = rs.Modules.Net["RE/RegisterHit"]
+  mouse1click()
+  reghit:FireServer(model:FindFirstChild("Head"))
+  reghit:FireServer(model:FindFirstChild("Torso"))
 end
 
-function gatherMobs(mob,targetPosition)
-  local e = Workspace.Enemies
-  Tween(e:FindFirstChild(mob).PrimaryPart,TweenInfo.new(5,Enum.EasingStyle.Linear),{CFrame = CFrame.new(targetPosition)})
+function changeEnemyHitbox(root)
+    root.Size = Vector3.new(50,50,50)
 end
 
-function DoWhatISay()
-  while wait(.1) do
-  
-    local data = plr.Data
-    
-    for i,v in pairs(instructions) do
-      local mname = v.QName
-      local model = v.Model
-      local requirement = v.Level
-      local section = v.Section
-  
-      if data.Level.Value >= requirement then
-          fireQuestEvent(mname,section)
-          attack(model.Humanoid,model,model.PrimaryPart.Position)
+function Farm()
+  while task.wait(.1) do
+    local e = Workspace.Enemies
+    local root = char.PrimaryPart
+    local plrdata = plr:FindFirstChild("Data")
+    for i,v in pairs(e:GetChildren()) do
+
+      local eroot = v:WaitForChild("HumanoidRootPart")
+      
+      if (plrdata.Level.Value == 1 or plrdata.Level.Value <= 300) and (v == instuctions["Sky bandits"].Model or v == instruction["Dark masters"].Model) then
+          Tween(root,TweenInfo.new(55,Enum.EasingStyle.Linear),{CFrame = Workspace.Map.Sky:GetPivot()})
+          Tween(root,TweenInfo.new(2,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
+            
+          Anchor(eroot)
+          changeEnemyHitbox(eroot)
+
+          repeat
+            Attack(v)
+          until v.Humanoid.Health == 0
+      elseif (plrdata.Level.Value == 300 or plrdata.Level.Value <= 400) and (v == instuctions["Military Soldier"].Model or v == instuctions["Military Spy"].Model) then
+        Tween(root,TweenInfo.new(135,Enum.EasingStyle.Linear),{CFrame = Workspace.Map.Magma:GetPivot()})
+        Tween(root,TweenInfo.new(2,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
+
+        if plrdata.Level.Value <= 325 then
+            fireQuestEvent("MagmaQuest",1)
+        elseif plrdata.Level.Value == 325 or plrdata.Level.Value <= 350 then
+            fireQuestEvent("MagmaQuest",2)
+        end
+
+        Anchor(eroot)
+        changeEnemyHitbox(eroot)
+
+        repeat
+          Attack(v)
+        until v.Humanoid.Health == 0
       end
     end
   end
 end
 
-DoWhatISay()
-    
-local thread = task.spawn(DoWhatISay)
-    
-game:GetService("UserInputService").InputBegan:Connect(function(inp,proc)
-  if proc then return end
+Anchor(char.PrimaryPart)
 
-  if inp.KeyCode == Enum.KeyCode.LeftAlt then
-    task.cancel(thread)
-  end
-end)
+local success , err = pcall(Farm)
+
+if success then print("ok!") else loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/main.lua'))() task.wait(.5) script:Remove() end
