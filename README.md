@@ -18,4 +18,4 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/lagbackisasussydog/wa
 
 CHANGELOGS:
 
-=> Rewriting script yay
+=> Developing on a script hub (i will add kaitun i promise)
