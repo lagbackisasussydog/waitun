@@ -9,8 +9,6 @@ local TextLabel = Instance.new("TextLabel")
 local Bar = Instance.new("Frame")
 local TextLabel_2 = Instance.new("TextLabel")
 
---Properties:
-
 Main.Name = "Main"
 Main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 Main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -109,17 +107,16 @@ TextLabel_2.TextSize = 20.000
 TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
 
--- Scripts:
 
-local function VXLGBSH_fake_script() -- Main.Animate 
+local function VXLGBSH_fake_script() 
 	local script = Instance.new('LocalScript', Main)
 
 	local tween = game:GetService("TweenService")
 	local frame = script.Parent.Main
 	
 	 local function create(inst,info,property)
-		tween:Create(inst,info,property):Play()
-	end
+	    tween:Create(inst,info,property):Play()
+	 end
 	
 	local notif = script.Parent.Notif
 	
