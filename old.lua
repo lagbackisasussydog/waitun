@@ -1,7 +1,9 @@
+local w = Workspace
+
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local root = char.PrimaryPart
-local es = Workspace.Enemies
+local es = w:WaitForChild("Enemies")
 
 local tweensvc = game:GetService("TweenService")
 
