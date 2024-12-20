@@ -45,7 +45,7 @@ Title.BorderSizePixel = 0
 Title.Position = UDim2.new(0.0222222228, 0, 0, 0)
 Title.Size = UDim2.new(0, 450, 0, 25)
 Title.Font = Enum.Font.SourceSans
-Title.Text = "-Waitun"
+Title.Text = "Waitun - " .. tostring(identifyexecutor())
 Title.TextColor3 = Color3.fromRGB(0, 0, 0)
 Title.TextSize = 14.000
 Title.TextXAlignment = Enum.TextXAlignment.Left
@@ -312,7 +312,7 @@ local function load()
 			"Soul Reaper",
 			"Cake Queen"
     }
-  end
+  endee
 end
 
 return coroutine.wrap(load)()
