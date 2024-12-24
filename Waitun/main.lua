@@ -439,7 +439,7 @@ local function load()
 					tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
 				until dist(prevPos.Position) <= 10
 				wait(1)
-				setMobHitbox(e)
+				setMobHitbox(mob)
 				repeat
 					mouse1click()
 				until mob.Humanoid.Health == 0
@@ -453,7 +453,7 @@ local function load()
 					tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
 				until dist(prevPos.Position) <= 10
 				wait(1)
-				setMobHitbox(e)
+				setMobHitbox(mob)
 				repeat
 					mouse1click()
 				until mob.Humanoid.Health == 0
