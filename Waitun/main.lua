@@ -1,30 +1,46 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
 local Main = Instance.new("ScreenGui")
-local Main_2 = Instance.new("Frame")
+local Window = Instance.new("Frame")
 local Bars = Instance.new("Frame")
 local UIGradient = Instance.new("UIGradient")
 local Title = Instance.new("TextLabel")
-local Section = Instance.new("ScrollingFrame")
+local Maximize = Instance.new("ImageButton")
+local Close = Instance.new("ImageButton")
+local Img = Instance.new("ImageLabel")
+local ActionStatus = Instance.new("TextLabel")
+local LevelFunc = Instance.new("TextButton")
+local FruitFunc = Instance.new("TextButton")
+local Panel = Instance.new("Frame")
+local Settings = Instance.new("ImageButton")
 local Notif = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
 local Bar = Instance.new("Frame")
 local TextLabel_2 = Instance.new("TextLabel")
 
+--Properties:
+
 Main.Name = "Main"
 Main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 Main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Main.ResetOnSpawn = false
 
-Main_2.Name = "Main"
-Main_2.Parent = Main
-Main_2.AnchorPoint = Vector2.new(0.5, 0.5)
-Main_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Main_2.BackgroundTransparency = 0.500
-Main_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Main_2.BorderSizePixel = 0
-Main_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-Main_2.Size = UDim2.new(0, 450, 0, 0)
+Window.Name = "Window"
+Window.Parent = Main
+Window.AnchorPoint = Vector2.new(0.5, 0.5)
+Window.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Window.BackgroundTransparency = 0.500
+Window.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Window.BorderSizePixel = 0
+Window.Position = UDim2.new(0.5, 0, 0.5, 0)
+Window.Size = UDim2.new(0, 450, 0, 0)
+Window.Visible = false
 
 Bars.Name = "Bars"
-Bars.Parent = Main_2
+Bars.Parent = Window
 Bars.AnchorPoint = Vector2.new(0.5, 0.5)
 Bars.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Bars.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -45,22 +61,98 @@ Title.BorderSizePixel = 0
 Title.Position = UDim2.new(0.0222222228, 0, 0, 0)
 Title.Size = UDim2.new(0, 450, 0, 25)
 Title.Font = Enum.Font.SourceSans
-Title.Text = "Waitun - " .. tostring(identifyexecutor())
+Title.Text = "Waitun - "
 Title.TextColor3 = Color3.fromRGB(0, 0, 0)
 Title.TextSize = 14.000
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
-Section.Name = "Section"
-Section.Parent = Main_2
-Section.Active = true
-Section.AnchorPoint = Vector2.new(0.5, 0.5)
-Section.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Section.BackgroundTransparency = 0.500
-Section.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Section.BorderSizePixel = 0
-Section.Position = UDim2.new(0.206666663, 0, 0.546666622, 0)
-Section.Size = UDim2.new(0, 0, 0, 0)
-Section.ScrollBarThickness = 0
+Maximize.Name = "Maximize"
+Maximize.Parent = Bars
+Maximize.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Maximize.BackgroundTransparency = 1.000
+Maximize.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Maximize.BorderSizePixel = 0
+Maximize.Position = UDim2.new(0.897777796, 0, 0.0399999991, 0)
+Maximize.Size = UDim2.new(0, 24, 0, 24)
+Maximize.Image = "http://www.roblox.com/asset/?id=6026568245"
+
+Close.Name = "Close"
+Close.Parent = Bars
+Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Close.BackgroundTransparency = 1.000
+Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Close.BorderSizePixel = 0
+Close.Position = UDim2.new(0.946666658, 0, 0.0399999991, 0)
+Close.Size = UDim2.new(0, 24, 0, 24)
+Close.Image = "http://www.roblox.com/asset/?id=6031094678"
+
+Img.Name = "Img"
+Img.Parent = Window
+Img.BackgroundTransparency = 1.000
+Img.BorderSizePixel = 0
+Img.Position = UDim2.new(0.0222222228, 0, 0.123333335, 0)
+Img.Size = UDim2.new(0.0622222237, 0, 0.0700000003, 0)
+Img.Image = "http://www.roblox.com/asset/?id=6022668890"
+
+ActionStatus.Name = "ActionStatus"
+ActionStatus.Parent = Window
+ActionStatus.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ActionStatus.BackgroundTransparency = 1.000
+ActionStatus.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ActionStatus.BorderSizePixel = 0
+ActionStatus.Position = UDim2.new(0.0844444409, 0, 0.123333335, 0)
+ActionStatus.Size = UDim2.new(0.866666675, 0, 0.0700000003, 0)
+ActionStatus.Font = Enum.Font.SourceSans
+ActionStatus.Text = "Action: Unknown"
+ActionStatus.TextColor3 = Color3.fromRGB(255, 255, 255)
+ActionStatus.TextSize = 18.000
+ActionStatus.TextXAlignment = Enum.TextXAlignment.Left
+
+LevelFunc.Name = "LevelFunc"
+LevelFunc.Parent = Window
+LevelFunc.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+LevelFunc.BackgroundTransparency = 0.500
+LevelFunc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+LevelFunc.BorderSizePixel = 0
+LevelFunc.Position = UDim2.new(0.0444444455, 0, 0.223333329, 0)
+LevelFunc.Size = UDim2.new(0.222222224, 0, 0.0833333358, 0)
+LevelFunc.Font = Enum.Font.SourceSans
+LevelFunc.Text = "LevelGrinder3000"
+LevelFunc.TextColor3 = Color3.fromRGB(255, 255, 255)
+LevelFunc.TextSize = 14.000
+
+FruitFunc.Name = "FruitFunc"
+FruitFunc.Parent = Window
+FruitFunc.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FruitFunc.BackgroundTransparency = 0.500
+FruitFunc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FruitFunc.BorderSizePixel = 0
+FruitFunc.Position = UDim2.new(0.282222211, 0, 0.223333329, 0)
+FruitFunc.Size = UDim2.new(0.222222224, 0, 0.0833333358, 0)
+FruitFunc.Font = Enum.Font.SourceSans
+FruitFunc.Text = "AutoGamble100"
+FruitFunc.TextColor3 = Color3.fromRGB(255, 255, 255)
+FruitFunc.TextSize = 14.000
+
+Panel.Name = "Panel"
+Panel.Parent = Window
+Panel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Panel.BackgroundTransparency = 0.500
+Panel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Panel.BorderSizePixel = 0
+Panel.Position = UDim2.new(0.0444444455, 0, 0.366666675, 0)
+Panel.Size = UDim2.new(0.906666696, 0, 0.563333333, 0)
+
+Settings.Name = "Settings"
+Settings.Parent = Window
+Settings.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Settings.BackgroundTransparency = 0.500
+Settings.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Settings.BorderSizePixel = 0
+Settings.Position = UDim2.new(0.533333361, 0, 0.223333329, 0)
+Settings.Size = UDim2.new(0.055555556, 0, 0.0833333358, 0)
+Settings.Visible = false
+Settings.Image = "http://www.roblox.com/asset/?id=6031280882"
 
 Notif.Name = "Notif"
 Notif.Parent = Main
@@ -106,6 +198,119 @@ TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel_2.TextSize = 20.000
 TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
+
+-- Scripts:
+
+local function CAGNA_fake_script() -- Maximize.Handle 
+	local script = Instance.new('LocalScript', Maximize)
+
+	local plr = game.Players.LocalPlayer
+	local tw = game:GetService("TweenService")
+	local gui = plr.PlayerGui.Main
+	
+	local absize = gui.AbsoluteSize
+	
+	local btn = script.Parent
+	
+	local pressed = false
+	
+	btn.MouseButton1Up:Connect(function()
+		pressed = not pressed
+		
+		if pressed then
+			gui.Window.Position = UDim2.new(0.5,0,0.5,0)
+			tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,absize.Y)}):Play()
+			tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,25)}):Play()
+			gui.Window.Draggable = false
+		else
+			tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,300)}):Play()
+			tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,25)}):Play()
+			gui.Window.Draggable = true
+		end
+	end)
+end
+coroutine.wrap(CAGNA_fake_script)()
+local function YFYUP_fake_script() -- Close.Handle 
+	local script = Instance.new('LocalScript', Close)
+
+	local btn = script.Parent
+	local frame = btn.Parent.Parent
+	local uis = game:GetService("UserInputService")
+	
+	btn.MouseButton1Up:Connect(function()
+		frame.ActionStatus.Text = "Action: Press LeftAlt to reopen the window again!"
+		wait(5)
+		frame.Visible = false
+	end)
+	
+	uis.InputBegan:Connect(function(inp,proc)
+		if proc then return end
+		
+		if inp.KeyCode == Enum.KeyCode.LeftAlt then
+			frame.ActionStatus.Text = "Action: Unknown"
+			frame.Visible = true
+		end
+	end)
+end
+coroutine.wrap(YFYUP_fake_script)()
+local function ATIJH_fake_script() -- Main.Animate 
+	local script = Instance.new('LocalScript', Main)
+
+	local tween = game:GetService("TweenService")
+	local frame = script.Parent.Window
+	
+	local function create(inst,info,property)
+		tween:Create(inst,info,property):Play()
+	end
+	
+	local notif = script.Parent.Notif
+	
+	frame.Img.Visible = false
+	frame.ActionStatus.Visible = false
+	
+	frame.Panel.Visible = false
+	frame.LevelFunc.Visible = false
+	frame.FruitFunc.Visible = false
+	frame.Settings.Visible = false
+	
+	frame.Bars.Close.Visible = false
+	frame.Bars.Maximize.Visible = false
+	
+	create(notif, TweenInfo.new(1),{Position = UDim2.new(0.85, 0,0.85, 0)})
+	task.wait(3)
+	create(notif, TweenInfo.new(3),{Position = UDim2.new(1.85, 0,0.85, 0)})
+	
+	task.wait(1)
+	
+	frame.Visible = true
+	create(frame.Bars.UIGradient,TweenInfo.new(),{Rotation = 0})
+	task.wait(1)
+	create(frame,TweenInfo.new(.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Size = UDim2.new(0,450,0,300)})
+	
+	frame.Bars.Close.Visible = true
+	frame.Bars.Maximize.Visible = true
+	
+	frame.Img.Visible = true
+	frame.ActionStatus.Visible = true
+	
+	task.wait(1)
+	frame.Panel.Visible = true
+	frame.LevelFunc.Visible = true
+	frame.FruitFunc.Visible = true
+	frame.Settings.Visible = true
+end
+coroutine.wrap(ATIJH_fake_script)()
+local function PKCV_fake_script() -- Main.Drag 
+	local script = Instance.new('LocalScript', Main)
+
+	local frame = script.Parent.Window
+	
+	task.wait(1.5)
+	frame.Active = true
+	frame.Draggable = true
+end
+coroutine.wrap(PKCV_fake_script)()
+
 
 
 local function VXLGBSH_fake_script() 
