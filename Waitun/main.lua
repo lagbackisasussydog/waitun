@@ -130,7 +130,7 @@ FruitFunc.BorderSizePixel = 0
 FruitFunc.Position = UDim2.new(0.282222211, 0, 0.223333329, 0)
 FruitFunc.Size = UDim2.new(0.222222224, 0, 0.0833333358, 0)
 FruitFunc.Font = Enum.Font.SourceSans
-FruitFunc.Text = "AutoGamble100"
+FruitFunc.Text = "GambleMachine300"
 FruitFunc.TextColor3 = Color3.fromRGB(255, 255, 255)
 FruitFunc.TextSize = 14.000
 
@@ -344,16 +344,10 @@ local function VXLGBSH_fake_script()
 end
 
 local function load()
-  local w = game.Workspace
-  local p = game.Players.LocalPlayer
-  local r = game.ReplicatedStorage
-  local g = p.PlayerGui
-
   local Configs = {
     ["AutoGrinder3000"] = {
       ["Enabled"] = false,
-      ["AttackMode"] = "VirtualInput",
-      ["Weapon"] = "Combat",
+      ["AttackMode"] = "Normal",
       ["TweenSpeed"] = 5,
       ["CollectSaber"] = true,
       ["GrindAllFightingStyle"] = true
@@ -362,15 +356,11 @@ local function load()
       ["Enabled"] = false,
       ["Amount"] = 1
     },
-    ["AutoSeaEvents"] = {
-      ["Enabled"] = false
-    },
     ["GambleMachine300"] = {
       ["Enabled"] = false
     },
   }
   
-  local tweening  = false
   local place = {
     ["First sea"] = false,
     ["Second sea"] = false,
@@ -387,136 +377,90 @@ local function load()
     place["Third sea"] = true
   end
 
-  if place["First sea"] = true then
-    Moblist = {
-			"Bandit",
-			"Monkey",
-			"Gorilla",
-			"Pirate",
-			"Brute",
-			"Desert Bandit",
-			"Desert Officer",
-			"Snow Bandit",
-			"Snowman",
-			"Chief Petty Officer",
-			"Sky Bandit",
-			"Dark Master",
-			"Toga Warrior",
-			"Gladiator",
-			"Military Soldier",
-			"Military Spy",
-			"Fishman Warrior",
-			"Fishman Commando",
-			"God's Guard",
-			"Shanda",
-			"Royal Squad",
-			"Royal Soldier",
-			"Galley Pirate",
-			"Galley Captain"
-    },
-    Bosslist = {
-			"The Gorilla King",
-			"Bobby",
-			"Yeti",
-			"Mob Leader",
-			"Vice Admiral",
-			"Warden",
-			"Chief Warden",
-			"Swan",
-			"Magma Admiral",
-			"Fishman Lord",
-			"Wysper",
-			"Thunder God",
-			"Cyborg",
-			"Saber Expert"
-    }
-  elseif place["Second sea"] = true then
-    Moblist = {
-			"Raider",
-			"Mercenary",
-			"Swan Pirate",
-			"Factory Staff",
-			"Marine Lieutenant",
-			"Marine Captain",
-			"Zombie",
-			"Vampire",
-			"Snow Trooper",
-			"Winter Warrior",
-			"Lab Subordinate",
-			"Horned Warrior",
-			"Magma Ninja",
-			"Lava Pirate",
-			"Ship Deckhand",
-			"Ship Engineer",
-			"Ship Steward",
-			"Ship Officer",
-			"Arctic Warrior",
-			"Snow Lurker",
-			"Sea Soldier",
-			"Water Fighter"
-    },
-    Bosslist = {
-    	"Diamond",
-			"Jeremy",
-			"Fajita",
-			"Don Swan",
-			"Smoke Admiral",
-			"Cursed Captain",
-			"Darkbeard",
-			"Order",
-			"Awakened Ice Admiral",
-			"Tide Keeper"
-    }
-  elseif place["Third sea"] = true then
-    Moblist = {
-			"Pirate Millionaire",
-			"Dragon Crew Warrior",
-			"Dragon Crew Archer",
-			"Female Islander",
-			"Giant Islander",
-			"Marine Commodore",
-			"Marine Rear Admiral",
-			"Fishman Raider",
-			"Fishman Captain",
-			"Forest Pirate",
-			"Mythological Pirate",
-			"Jungle Pirate",
-			"Musketeer Pirate",
-			"Reborn Skeleton",
-			"Living Zombie",
-			"Demonic Soul",
-			"Posessed Mummy",
-			"Peanut Scout",
-			"Peanut President",
-			"Ice Cream Chef",
-			"Ice Cream Commander",
-			"Cookie Crafter",
-			"Cake Guard",
-			"Baking Staff",
-			"Head Baker",
-			"Cocoa Warrior",
-			"Chocolate Bar Battler",
-			"Sweet Thief",
-			"Candy Rebel",
-			"Candy Pirate",
-			"Snow Demon",
-			"Isle Outlaw",
-			"Island Boy",
-			"Sun-kissed Warrior",
-			"Isle Champion"
-    },
-    Bosslist = {
-			"Stone",
-			"Island Empress",
-			"Kilo Admiral",
-			"Captain Elephant",
-			"Beautiful Pirate",
-			"rip_indra True Form",
-			"Longma",
-			"Soul Reaper",
-			"Cake Queen"
-    }
-  end
+	local w = Workspace
+	local p = game.Players.LocalPlayer
+	local r = game:GetService("ReplicatedStorage")
+	local tw = game:GetService("TweenService")
+	local vu = game:GetService("VirtualUser")
+
+	local c = p.Character
+	local root = c.PrimaryPart
+
+	local ef = w.Enemies
+	local m = w.Map
+	local pdata = p:FindFirstChild("Data")
+	
+	local att = Instance.new("Attachment",root)
+	local align = Instance.new("AlignPosition",att)
+	align.Mode = Enum.PositionAlignmentMode.OneAttachment
+	align.Attachment0 = att
+	align.MaxForce = math.huge
+	align.MaxVelocity = math.huge
+	align.Position = root.Position
+
+	local function getMobPrevCFrame(mob : String)
+		return rs:FindFirstChild(mob):GetPivot()
+	end
+
+	local function getMobDistance(position : Vector3)
+		return p:DistanceFromCharacter(position)
+	end
+
+	local function setMobHitbox(mob : Model)
+		local hum = mob:FindFirstChild("Humanoid")
+		local mroot = mob.PrimaryPart
+
+		hum.WalkSpeed = 0
+		mroot.CanCollide = false
+		mroot.Size = Vector3.new(50,50,50)
+	end
+	
+	local function att()
+		
+	end
+
+	local function tween(inst,info,prop)
+		local track = tw:Create(inst,info,prop)
+
+		track:Play()
+		track.Completed:Wait()
+		align.Position = root.Position
+	end
+
+	if Configs.AutoGrinder3000.Enabled == true then
+		if place["First sea"] == true then
+			if pdata.Level.Value == 1 and pdata.Level.Value < 300 then
+				local mob = ef:FindFirstChild("Sky Bandit")
+				local prevPos = getMobPrevCFrame(mob)
+				tween(root,TweenInfo.new(150,Enum.EasingStyle.Linear),{CFrame = map.Sky:GetPivot()})
+				tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)}
+
+				repeat
+					tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
+				until dist(prevPos.Position) <= 10
+				wait(1)
+				setMobHitbox(e)
+				repeat
+					mouse1click()
+				until mob.Humanoid.Health == 0
+			elseif pdata.Level.Value == 300 and pdata.Level.Value < 325 then
+				local mob = ef:FindFirstChild("Military Soldier")
+				local prevPos = getMobPrevCFrame(mob)
+				tween(root,TweenInfo.new(150,Enum.EasingStyle.Linear),{CFrame = map.Sky:GetPivot()})
+				tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)}
+
+				repeat
+					tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
+				until dist(prevPos.Position) <= 10
+				wait(1)
+				setMobHitbox(e)
+				repeat
+					mouse1click()
+				until mob.Humanoid.Health == 0
+			end
+		end
+	end
+	
 end
 
 coroutine.wrap(load)()
