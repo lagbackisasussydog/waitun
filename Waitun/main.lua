@@ -116,4 +116,4 @@ local function load()
 	
 end
 
-coroutine.wrap(load)()
+return coroutine.wrap(load)()
