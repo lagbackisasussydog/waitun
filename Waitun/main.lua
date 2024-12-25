@@ -1,3 +1,5 @@
+local iden = identifyexecutor()
+
 local Main = Instance.new("ScreenGui")
 local Window = Instance.new("Frame")
 local Bars = Instance.new("Frame")
@@ -56,7 +58,7 @@ Title.BorderSizePixel = 0
 Title.Position = UDim2.new(0.0222222228, 0, 0, 0)
 Title.Size = UDim2.new(0, 450, 0, 25)
 Title.Font = Enum.Font.SourceSans
-Title.Text = "Waitun - "
+Title.Text = "Waitun - " .. tostring(iden)
 Title.TextColor3 = Color3.fromRGB(0, 0, 0)
 Title.TextSize = 14.000
 Title.TextXAlignment = Enum.TextXAlignment.Left
@@ -421,6 +423,10 @@ local function load()
 			end
 		end
 	end
+
+	LevelFunc.MouseButton1Up:Connect(function()
+		Configs.AutoGrinder3000.Enabled = true	
+	end)
 	
 end
 
