@@ -311,8 +311,6 @@ local function PKCV_fake_script() -- Main.Drag
 end
 coroutine.wrap(PKCV_fake_script)()
 
-
-
 local function VXLGBSH_fake_script() 
 	local script = Instance.new('LocalScript', Main)
 
@@ -342,6 +340,8 @@ local function VXLGBSH_fake_script()
 	frame.Active = true
 	frame.Draggable = true
 end
+
+coroutine.wrap(VXLGBSH_fake_script)()
 
 local function load()
   local Configs = {
@@ -464,4 +464,3 @@ local function load()
 end
 
 coroutine.wrap(load)()
-coroutine.wrap(VXLGBSH_fake_script)()
