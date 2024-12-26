@@ -1,6 +1,6 @@
 local function load()
 	if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 or game.PlaceId == 7449423635 then
-		local iden = "Tng"
+		local iden = identifyexecutor()
 
 		local Main = Instance.new("ScreenGui")
 		local Window = Instance.new("Frame")
@@ -72,7 +72,7 @@ local function load()
 		Title.Position = UDim2.new(0.0222222228, 0, 0, 0)
 		Title.Size = UDim2.new(0, 450, 0, 25)
 		Title.Font = Enum.Font.SourceSans
-		Title.Text = "Waitun - "
+		Title.Text = "Waitun - " .. tostring(iden)
 		Title.TextColor3 = Color3.fromRGB(0, 0, 0)
 		Title.TextSize = 14.000
 		Title.TextXAlignment = Enum.TextXAlignment.Left
@@ -143,6 +143,7 @@ local function load()
 		AutoFarm.BorderSizePixel = 0
 		AutoFarm.Position = UDim2.new(0.0444444455, 0, 0.366666675, 0)
 		AutoFarm.Size = UDim2.new(0.906666696, 0, 0.563333333, 0)
+		AutoFarm.Visible = false
 
 		LevelDisplay.Name = "LevelDisplay"
 		LevelDisplay.Parent = AutoFarm
@@ -527,9 +528,9 @@ local function load()
 			frame.Draggable = true
 		end
 		coroutine.wrap(EFSUJ_fake_script)()
-		
+
 		local genv = getgenv() or _G
-		
+
 		local Configs = {
 			["AutoGrinder3000"] = {
 				["Enabled"] = false,
@@ -612,7 +613,7 @@ local function load()
 		end
 
 		local function att()
-			
+
 		end
 
 		local function tween(inst,info,prop)
@@ -622,22 +623,22 @@ local function load()
 			track.Completed:Wait()
 			align.Position = root.Position
 		end
-		
+
 		local function tp(cf : CFrame)
 			local region = Region3.new(-cf.Position, cf.Position)
-			
+
 			repeat
 				c:PivotTo(cf)
 				c:FindFirstChild("Humanoid").Health = 0
 			until getMobDistance(region.CFrame.Position) == 0
 		end
-		
+
 		LevelFunc.MouseButton1Up:Connect(function()
 			Configs.AutoGrinder3000.Enabled = true
 			task.spawn(function()
 				if place["First sea"] == true then
 					if pdata.Level.Value == 1 and pdata.Level.Value < 300 then
-						
+
 						wait(5)
 
 						local mob = ef:FindFirstChild("Sky Bandit")
