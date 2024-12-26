@@ -161,7 +161,7 @@ Text1.BorderSizePixel = 0
 Text1.Position = UDim2.new(0.0441176482, 0, 0.100591719, 0)
 Text1.Size = UDim2.new(0.301470578, 0, 0.165680468, 0)
 Text1.Font = Enum.Font.SourceSans
-Text1.Text = "	Enabled"
+Text1.Text = "  Enabled"
 Text1.TextColor3 = Color3.fromRGB(255, 255, 255)
 Text1.TextSize = 14.000
 Text1.TextXAlignment = Enum.TextXAlignment.Left
@@ -175,7 +175,7 @@ Text2.BorderSizePixel = 0
 Text2.Position = UDim2.new(0.0441176482, 0, 0.319526613, 0)
 Text2.Size = UDim2.new(0.301470578, 0, 0.165680468, 0)
 Text2.Font = Enum.Font.SourceSans
-Text2.Text = "	Attack mode"
+Text2.Text = "  Attack mode"
 Text2.TextColor3 = Color3.fromRGB(255, 255, 255)
 Text2.TextSize = 14.000
 Text2.TextXAlignment = Enum.TextXAlignment.Left
@@ -189,7 +189,7 @@ Text3.BorderSizePixel = 0
 Text3.Position = UDim2.new(0.0441176482, 0, 0.538461566, 0)
 Text3.Size = UDim2.new(0.301470578, 0, 0.165680468, 0)
 Text3.Font = Enum.Font.SourceSans
-Text3.Text = "	Current weapon"
+Text3.Text = "  Current weapon"
 Text3.TextColor3 = Color3.fromRGB(255, 255, 255)
 Text3.TextSize = 14.000
 Text3.TextXAlignment = Enum.TextXAlignment.Left
@@ -242,7 +242,7 @@ Text4.BorderSizePixel = 0
 Text4.Position = UDim2.new(0.0441176482, 0, 0.745562136, 0)
 Text4.Size = UDim2.new(0.897058845, 0, 0.165680468, 0)
 Text4.Font = Enum.Font.SourceSans
-Text4.Text = "	Current level:"
+Text4.Text = "  Current level:"
 Text4.TextColor3 = Color3.fromRGB(255, 255, 255)
 Text4.TextSize = 14.000
 
@@ -308,147 +308,147 @@ TextLabel_2.TextWrapped = true
 TextLabel_2.TextXAlignment = Enum.TextXAlignment.Right
 
 local function KLVVLLP_fake_script() -- Maximize.Handle 
-	local script = Instance.new('LocalScript', Maximize)
+    local script = Instance.new('LocalScript', Maximize)
 
-	local plr = game.Players.LocalPlayer
-	local tw = game:GetService("TweenService")
-	local gui = plr.PlayerGui.Main
-	
-	local absize = gui.AbsoluteSize
-	
-	local btn = script.Parent
-	
-	local pressed = false
-	
-	btn.MouseButton1Up:Connect(function()
-		pressed = not pressed
-		
-		if pressed then
-			gui.Window.Position = UDim2.new(0.5,0,0.5,0)
-			tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,absize.Y)}):Play()
-			tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,25)}):Play()
-			gui.Window.Draggable = false
-		else
-			tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,300)}):Play()
-			tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,25)}):Play()
-			gui.Window.Draggable = true
-		end
-	end)
+    local plr = game.Players.LocalPlayer
+    local tw = game:GetService("TweenService")
+    local gui = plr.PlayerGui.Main
+    
+    local absize = gui.AbsoluteSize
+    
+    local btn = script.Parent
+    
+    local pressed = false
+    
+    btn.MouseButton1Up:Connect(function()
+        pressed = not pressed
+        
+        if pressed then
+            gui.Window.Position = UDim2.new(0.5,0,0.5,0)
+            tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,absize.Y)}):Play()
+            tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,absize.X,0,25)}):Play()
+            gui.Window.Draggable = false
+        else
+            tw:Create(gui.Window,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,300)}):Play()
+            tw:Create(gui.Window.Bars,TweenInfo.new(.5),{Size = UDim2.new(0,450,0,25)}):Play()
+            gui.Window.Draggable = true
+        end
+    end)
 end
 coroutine.wrap(KLVVLLP_fake_script)()
 local function RCDV_fake_script() -- Close.Handle 
-	local script = Instance.new('LocalScript', Close)
+    local script = Instance.new('LocalScript', Close)
 
-	local btn = script.Parent
-	local frame = btn.Parent.Parent
-	local uis = game:GetService("UserInputService")
-	
-	btn.MouseButton1Up:Connect(function()
-		frame.Parent.Enabled = false
-	end)
-	
-	uis.InputBegan:Connect(function(inp,proc)
-		if proc then return end
-		
-		if inp.KeyCode == Enum.KeyCode.LeftAlt then
-			frame.Parent.Enabled = true
-		end
-	end)
+    local btn = script.Parent
+    local frame = btn.Parent.Parent
+    local uis = game:GetService("UserInputService")
+    
+    btn.MouseButton1Up:Connect(function()
+        frame.Parent.Enabled = false
+    end)
+    
+    uis.InputBegan:Connect(function(inp,proc)
+        if proc then return end
+        
+        if inp.KeyCode == Enum.KeyCode.LeftAlt then
+            frame.Parent.Enabled = true
+        end
+    end)
 end
 coroutine.wrap(RCDV_fake_script)()
 local function MFZG_fake_script() -- LevelFunc.Pressed 
-	local script = Instance.new('LocalScript', LevelFunc)
+    local script = Instance.new('LocalScript', LevelFunc)
 
-	local levelpanel = script.Parent.Parent.FuncPanel.AutoFarm
-	local btn = script.Parent
-	
-	local pressed = false
-	
-	btn.MouseButton1Up:Connect(function()
-		pressed = not pressed
-		
-		if pressed then
-			levelpanel.Visible = true
-		else
-			levelpanel.Visible = false
-		end
-	end)
+    local levelpanel = script.Parent.Parent.FuncPanel.AutoFarm
+    local btn = script.Parent
+    
+    local pressed = false
+    
+    btn.MouseButton1Up:Connect(function()
+        pressed = not pressed
+        
+        if pressed then
+            levelpanel.Visible = true
+        else
+            levelpanel.Visible = false
+        end
+    end)
 end
 coroutine.wrap(MFZG_fake_script)()
 local function DTUHE_fake_script() -- Enabled.Pressed 
-	local script = Instance.new('LocalScript', Enabled)
+    local script = Instance.new('LocalScript', Enabled)
 
-	local btn = script.Parent
-	
-	local pressed = false
-	
-	btn.MouseButton1Up:Connect(function()
-		pressed = not pressed
-		
-		if pressed then
-			btn.Text = "True"
-			btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
-		else
-			btn.Text = "False"
-			btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
-		end
-	end)
+    local btn = script.Parent
+    
+    local pressed = false
+    
+    btn.MouseButton1Up:Connect(function()
+        pressed = not pressed
+        
+        if pressed then
+            btn.Text = "True"
+            btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+        else
+            btn.Text = "False"
+            btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+        end
+    end)
 end
 coroutine.wrap(DTUHE_fake_script)()
 local function MZXHPOY_fake_script() -- Main.Animate 
-	local script = Instance.new('LocalScript', Main)
+    local script = Instance.new('LocalScript', Main)
 
-	local tween = game:GetService("TweenService")
-	local frame = script.Parent.Window
-	
-	local function create(inst,info,property)
-		tween:Create(inst,info,property):Play()
-	end
-	
-	local notif = script.Parent.Notif
-	
-	frame.Welcome.Text = "Welcome! " .. game.Players.LocalPlayer.Name
-	
-	frame.Panel.Visible = false
-	frame.LevelFunc.Visible = false
-	frame.FruitFunc.Visible = false
-	frame.Settings.Visible = false
-	frame.Welcome.Visible = false
-	
-	frame.Bars.Close.Visible = false
-	frame.Bars.Maximize.Visible = false
-	
-	create(notif, TweenInfo.new(1),{Position = UDim2.new(0.85, 0,0.85, 0)})
-	task.wait(3)
-	create(notif, TweenInfo.new(3),{Position = UDim2.new(1.85, 0,0.85, 0)})
-	
-	task.wait(1)
-	
-	frame.Visible = true
-	create(frame.Bars.UIGradient,TweenInfo.new(),{Rotation = 0})
-	task.wait(1)
-	create(frame,TweenInfo.new(.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Size = UDim2.new(0,450,0,300)})
-	
-	frame.Bars.Close.Visible = true
-	frame.Bars.Maximize.Visible = true
-	
-	frame.Welcome.Visible = true
-	
-	frame.Panel.Visible = true
-	frame.LevelFunc.Visible = true
-	frame.FruitFunc.Visible = true
-	frame.Settings.Visible = true
-	
+    local tween = game:GetService("TweenService")
+    local frame = script.Parent.Window
+    
+    local function create(inst,info,property)
+        tween:Create(inst,info,property):Play()
+    end
+    
+    local notif = script.Parent.Notif
+    
+    frame.Welcome.Text = "Welcome! " .. game.Players.LocalPlayer.Name
+    
+    frame.Panel.Visible = false
+    frame.LevelFunc.Visible = false
+    frame.FruitFunc.Visible = false
+    frame.Settings.Visible = false
+    frame.Welcome.Visible = false
+    
+    frame.Bars.Close.Visible = false
+    frame.Bars.Maximize.Visible = false
+    
+    create(notif, TweenInfo.new(1),{Position = UDim2.new(0.85, 0,0.85, 0)})
+    task.wait(3)
+    create(notif, TweenInfo.new(3),{Position = UDim2.new(1.85, 0,0.85, 0)})
+    
+    task.wait(1)
+    
+    frame.Visible = true
+    create(frame.Bars.UIGradient,TweenInfo.new(),{Rotation = 0})
+    task.wait(1)
+    create(frame,TweenInfo.new(.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Size = UDim2.new(0,450,0,300)})
+    
+    frame.Bars.Close.Visible = true
+    frame.Bars.Maximize.Visible = true
+    
+    frame.Welcome.Visible = true
+    
+    frame.Panel.Visible = true
+    frame.LevelFunc.Visible = true
+    frame.FruitFunc.Visible = true
+    frame.Settings.Visible = true
+    
 end
 coroutine.wrap(MZXHPOY_fake_script)()
 local function BVNZPGF_fake_script() -- Main.Drag 
-	local script = Instance.new('LocalScript', Main)
+    local script = Instance.new('LocalScript', Main)
 
-	local frame = script.Parent.Window
-	
-	task.wait(1.5)
-	frame.Active = true
-	frame.Draggable = true
+    local frame = script.Parent.Window
+    
+    task.wait(1.5)
+    frame.Active = true
+    frame.Draggable = true
 end
 coroutine.wrap(BVNZPGF_fake_script)()
 
@@ -486,98 +486,103 @@ local function load()
     place["Third sea"] = true
   end
 
-	local w = Workspace
-	local p = game.Players.LocalPlayer
-	local r = game:GetService("ReplicatedStorage")
-	local tw = game:GetService("TweenService")
-	local vu = game:GetService("VirtualUser")
+    local w = Workspace
+    local p = game.Players.LocalPlayer
+    local r = game:GetService("ReplicatedStorage")
+    local tw = game:GetService("TweenService")
+    local vu = game:GetService("VirtualUser")
 
-	local c = p.Character
-	local root = c.PrimaryPart
+    local c = p.Character
+    local root = c.PrimaryPart
 
-	local ef = w.Enemies
-	local m = w.Map
-	local pdata = p:FindFirstChild("Data")
-	
-	local att = Instance.new("Attachment",root)
-	local align = Instance.new("AlignPosition",att)
-	align.Mode = Enum.PositionAlignmentMode.OneAttachment
-	align.Attachment0 = att
-	align.MaxForce = math.huge
-	align.MaxVelocity = math.huge
-	align.Position = root.Position
+    local ef = w.Enemies
+    local m = w.Map
+    local pdata = p:FindFirstChild("Data")
+    
+    local att = Instance.new("Attachment",root)
+    local align = Instance.new("AlignPosition",att)
+    align.Mode = Enum.PositionAlignmentMode.OneAttachment
+    align.Attachment0 = att
+    align.MaxForce = math.huge
+    align.MaxVelocity = math.huge
+    align.Position = root.Position
 
-	local function getMobPrevCFrame(mob : String)
-		return rs:FindFirstChild(mob):GetPivot()
-	end
+    local function getMobPrevCFrame(mob : String)
+        return rs:FindFirstChild(mob):GetPivot()
+    end
 
-	local function getMobDistance(position : Vector3)
-		return p:DistanceFromCharacter(position)
-	end
+    local function getMobDistance(position : Vector3)
+        return p:DistanceFromCharacter(position)
+    end
+    
+    Text4.Text = "  Current level: " .. tostring(pdata.Level.Value)
+    
+    pdata.Level:GetPropertyChangedSignal("Value"):Connect(function(v)
+        Text4.Text = "  Current level: " .. tostring(v)
+    end)
+    
+    local function setMobHitbox(mob : Model)
+        local hum = mob:FindFirstChild("Humanoid")
+        local mroot = mob.PrimaryPart
 
-	local function setMobHitbox(mob : Model)
-		local hum = mob:FindFirstChild("Humanoid")
-		local mroot = mob.PrimaryPart
+        hum.WalkSpeed = 0
+        mroot.CanCollide = false
+        mroot.Size = Vector3.new(50,50,50)
+    end
+    
+    local function att()
+        
+    end
 
-		hum.WalkSpeed = 0
-		mroot.CanCollide = false
-		mroot.Size = Vector3.new(50,50,50)
-	end
-	
-	local function att()
-		
-	end
+    local function tween(inst,info,prop)
+        local track = tw:Create(inst,info,prop)
 
-	local function tween(inst,info,prop)
-		local track = tw:Create(inst,info,prop)
+        track:Play()
+        track.Completed:Wait()
+        align.Position = root.Position
+    end
 
-		track:Play()
-		track.Completed:Wait()
-		align.Position = root.Position
-	end
+    
+    if Configs.AutoGrinder3000.Enabled == true then
+        pcall(function()
+            repeat
+                if place["First sea"] == true then
+                    if pdata.Level.Value == 1 and pdata.Level.Value < 300 then
+                        local mob = ef:FindFirstChild("Sky Bandit")
+                        local prevPos = getMobPrevCFrame(mob)
+                        tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)})
+        
+                        repeat
+                            tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
+                        until getMobDistance(prevPos.Position) <= 10
+                        wait(1)
+                        setMobHitbox(mob)
+                        repeat
+                            mouse1click()
+                        until mob.Humanoid.Health == 0
+                    elseif pdata.Level.Value == 300 and pdata.Level.Value < 325 then
+                        local mob = ef:FindFirstChild("Military Soldier")
+                        local prevPos = getMobPrevCFrame(mob)
+                        tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)})
+        
+                        repeat
+                            tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
+                        until getMobDistance(prevPos.Position) <= 10
+                        wait(1)
+                        setMobHitbox(mob)
+                        repeat
+                            mouse1click()
+                        until mob.Humanoid.Health == 0
+                    end
+                end
+            until Configs.AutoGrinder3000.Enabled == false
+        end)
+    end
 
-	
-	if Configs.AutoGrinder3000.Enabled == true then
-		pcall(function()
-			repeat
-				if place["First sea"] == true then
-					if pdata.Level.Value == 1 and pdata.Level.Value < 300 then
-						local mob = ef:FindFirstChild("Sky Bandit")
-						local prevPos = getMobPrevCFrame(mob)
-						tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)})
-		
-						repeat
-							tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
-						until getMobDistance(prevPos.Position) <= 10
-						wait(1)
-						setMobHitbox(mob)
-						repeat
-							mouse1click()
-						until mob.Humanoid.Health == 0
-					elseif pdata.Level.Value == 300 and pdata.Level.Value < 325 then
-						local mob = ef:FindFirstChild("Military Soldier")
-						local prevPos = getMobPrevCFrame(mob)
-						tween(root,TweenInfo.new(1),{CFrame = prevPos * CFrame.new(0,30,0)})
-		
-						repeat
-							tween(e.PrimaryPart,TweenInfo.new(5),{CFrame = prevPos})
-						until getMobDistance(prevPos.Position) <= 10
-						wait(1)
-						setMobHitbox(mob)
-						repeat
-							mouse1click()
-						until mob.Humanoid.Health == 0
-					end
-				end
-			until Configs.AutoGrinder3000.Enabled == false
-		end)
-	end
-
-	LevelFunc.MouseButton1Up:Connect(function()
-		Configs.AutoGrinder3000.Enabled = true	
-	end)
-	
+    LevelFunc.MouseButton1Up:Connect(function()
+        Configs.AutoGrinder3000.Enabled = true  
+    end)
+    
 end
-
+return task.spawn(load)
 end
-return coroutine.wrap(load)()
