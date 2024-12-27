@@ -11,13 +11,14 @@ But anyways, this script is open-source so feel free to skid
 Here's the script: 
 
 ``` lua
-  nah
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/mastery.lua"))()
 ```
 
 ---
 
-(don't mind me if i lie cuz i already tell you)
+(don't mind me if i lied cuz i already tell you)
 
 CHANGELOGS:
 
 => Developing on a script hub (i will add kaitun i promise)
+=> No more hiccup
