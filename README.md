@@ -19,6 +19,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/wa
 (don't mind me if i lied cuz i already tell you)
 
 CHANGELOGS:
-
+````
 => Developing on a script hub (i will add kaitun i promise)
+
 => No more hiccup
+````
