@@ -792,7 +792,7 @@ local function load()
 				Enable.BackgroundColor3 = Color3.fromRGB(255,0,0)
 				Enable.Text = "Disabled"
 				task.cancel(t)
-				r:FindFirstChild(""):Destroy()	
+				r:FindFirstChild("Force"):Destroy()	
 			end
 		end)
 		
