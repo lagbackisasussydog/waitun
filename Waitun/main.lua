@@ -764,6 +764,21 @@ local function load()
 			})
 		end
 		coroutine.wrap(QUTRJX_fake_script)()
+
+		Enable.MouseButton1Up:Connect(function()
+			local p = false
+			local t = loadstring(game:HttpGet(""))()
+			p = not p
+
+			if p then
+				Enable.BackgroundColor3 = Color3.fromRGB(0,255,0)
+				Enable.Text = "Enabled"
+			else
+				Enable.BackgroundColor3 = Color3.fromRGB(255,0,0)
+				Enable.Text = "Disabled"
+			end
+		end)
+		
 	end
 end
 return coroutine.wrap(load)()
