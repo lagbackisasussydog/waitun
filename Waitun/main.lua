@@ -769,33 +769,35 @@ local function load()
 		local c = p.Character
 		local r = c.PrimaryPart
 		local h = c.Humanoid
-		
-		Enable.MouseButton1Up:Connect(function()
-			local p = false
-			local t = loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/Waitun/Modules/AutoFarm.lua"))()
-			p = not p
 
-			if p then
-				Enable.BackgroundColor3 = Color3.fromRGB(0,255,0)
-				Enable.Text = "Enabled"
-
-				task.spawn(t)
-
-				h.HealthChanged:Connect(function(health)
-					if health == 0 then
-						task.cancel(t)
-						task.wait(10)
-						task.spawn(t)
-					end
-				end)
-			else
-				Enable.BackgroundColor3 = Color3.fromRGB(255,0,0)
-				Enable.Text = "Disabled"
-				task.cancel(t)
-				r:FindFirstChild("Force"):Destroy()	
-			end
-		end)
-		
+		local function Pressed1()
+			Enable.MouseButton1Up:Connect(function()
+				local p = false
+				local t = loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/Waitun/Modules/AutoFarm.lua"))()
+				p = not p
+	
+				if p then
+					Enable.BackgroundColor3 = Color3.fromRGB(0,255,0)
+					Enable.Text = "Enabled"
+	
+					task.spawn(t)
+	
+					h.HealthChanged:Connect(function(health)
+						if health == 0 then
+							task.cancel(t)
+							task.wait(10)
+							task.spawn(t)
+						end
+					end)
+				else
+					Enable.BackgroundColor3 = Color3.fromRGB(255,0,0)
+					Enable.Text = "Disabled"
+					task.cancel(t)
+					r:FindFirstChild("Force"):Destroy()	
+				end
+			end)
+		end
+		coroutine.wrap(Pressed1)()
 	end
 end
 return coroutine.wrap(load)()
