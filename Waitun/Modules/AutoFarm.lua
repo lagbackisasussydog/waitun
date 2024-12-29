@@ -1,5 +1,4 @@
 local function load()
-    if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 or game.PlaceId == 7449423635 then
     
     local rs = game:GetService("ReplicatedStorage")
     local tw = game:GetService("TweenService")
@@ -12,12 +11,8 @@ local function load()
     local net = rs.Modules.Net
 
     local e = Enum
-		local ef = workspace.Enemies
-		local map = workspace.Map
-		
-    repeat
-      wait()
-    until c
+    local ef = workspace.Enemies
+    local map = workspace.Map
 
     local function inst(inst : String,place) return Instance.new(inst,place) end
     
@@ -78,11 +73,11 @@ local function load()
 			pcall(function()
 				for i,enemy in ef:GetChildren() do
 					if (getPLevel(p) == 1 or getPLevel(p) < 300) and (e.Name == "Sky Bandit [Lv. 150]" or e.Name == "Dark Master [Lv. 175"]) then
-							disableCollide(c)
+						disableCollide(c)
 
 						if #ef:GetChildren() == 0 then
 							repeat
-									wait()
+								wait()
 							until #ef:GetChildren() ~= 0
 						end
 					elseif (getPLevel(p) == 1 or getPLevel(p) < 300) and e.Name == "Military Soldier [Lv. 300]" then
@@ -91,7 +86,6 @@ local function load()
 				end
 			end)
 		end
-  end
 end
 
 coroutine.wrap(load)()
