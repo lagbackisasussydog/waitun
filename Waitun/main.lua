@@ -780,20 +780,17 @@ local function load()
 					Enable.BackgroundColor3 = Color3.fromRGB(0,255,0)
 					Enable.Text = "Enabled"
 	
-					task.spawn(t)
-	
-					h.HealthChanged:Connect(function(health)
-						if health == 0 then
-							task.cancel(t)
-							task.wait(10)
-							task.spawn(t)
-						end
+					pcall(function()
+						task.spawn(t)
 					end)
 				else
 					Enable.BackgroundColor3 = Color3.fromRGB(255,0,0)
 					Enable.Text = "Disabled"
-					task.cancel(t)
-					r:FindFirstChild("Force"):Destroy()	
+
+					pcall(function()
+						task.cancel(t)
+						r:FindFirstChild("Force"):Destroy()
+					end)
 				end
 			end)
 		end
