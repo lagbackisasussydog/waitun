@@ -1,5 +1,3 @@
-local function load()
-    
     local rs = game:GetService("ReplicatedStorage")
     local tw = game:GetService("TweenService")
 
@@ -82,10 +80,7 @@ local function load()
 						end
 					elseif (getPLevel(p) == 1 or getPLevel(p) < 300) and e.Name == "Military Soldier [Lv. 300]" then
 
-					end	
+					end
 				end
 			end)
 		end
-end
-
-coroutine.wrap(load)()
