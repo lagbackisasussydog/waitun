@@ -14,14 +14,10 @@
 
     local function inst(inst : String,place) return Instance.new(inst,place) end
     
-    local att = inst("Attachment",r)
-    att.Name = "Force"
-
-    local align = inst("AlignPosition",att)
-    align.Mode = e.PositionAlignmentMode.OneAttachment
-    align.MaxForce = math.huge
-    align.MaxVelocity = math.huge
-    align.Position = r.Position
+    local force = inst("BodyVelocity",r)
+    force.Name = "Force"
+    force.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+    force.Velocity = Vector3.new(math.huge,0,math.huge)
     
     local function Tween(inst,info,prop)
       local track = tw:Create(inst,info,prop)
