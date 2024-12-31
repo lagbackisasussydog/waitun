@@ -52,35 +52,34 @@ local function load()
         vim:SendMouseButtonEvent(0,0,0,true,game,1)
     end
     
-    local function MobAura(e)
-        local force = Instance.new("BodyVelocity",r)
-        force.Name  = "Force"
+    local function MobAura()
+        local force    = Instance.new("BodyVelocity",r)
+        force.Name     = "Force"
+        force.MaxForce = Vector3.new(1000000000,1000000000,1000000000)
         
-        if e == true then
-            force.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-            pcall(function()
+        cmf:InvokeServer("Buso")
+        
+        pcall(function()
               for _,e in enemies:GetChildren() do
-                  if e == false then break end
                   local er = e.Head
                   local eh = e.Humanoid
                         
                   local dist = p:DistanceFromCharacter(er.Position)
                         
-                  er.Size     = Vector3.new(500,500,500)
-                  er.Anchored = true
+                  er.Size      = Vector3.new(50,50,50)
+                  eh.WalkSpeed = 0
                   tp(r,TweenInfo.new(dist / 350,Enum.EasingStyle.Linear),{CFrame = er.CFrame * CFrame.new(0,30,0)})
                         
                   repeat
                        wait(.5)
+                       e.Head.CFrame = r.CFrame
                        att(e)
                   until eh.Health == 0
                end
-            end)
-       elseif e == false then
-          force:Destroy()
-      end
+        end)
     
     end
+       
     local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
 
     local Luxt = Luxtl.CreateWindow("Waitun - " .. tostring(identifyexecutor()), 6105620301)
@@ -104,8 +103,12 @@ local function load()
     local MobAuraSection = GrinderTab:Section("Mob grinder")
     
     MobAuraSection:Toggle("Enable",function(t)
-        print(t)
-        coroutine.wrap(MobAura)(t)
+        local thread = MobAura()
+        if t == true then
+            
+        else
+            
+        end
     end)
     
     MobAuraSection:DropDown("Weapon",{"Melee","Sword"},function(weapon)
@@ -115,12 +118,10 @@ local function load()
     MobAuraSection:DropDown("Mob",{},function()
     
     end)
-
-    local MapSection = TeleportTab:Section("Tween to map")
     
-    MapSection:Toggle("Tween",function(t) end)
-
-    MapSection:DropDown("Map",map:GetChildren(),function(map) end)
+    local TpSection = Teleport:Section("Tween to destination")
+    
+    TpSection:DropDown("Islands",{},function(m) end)
     
     local cf = creditsTab:Section("Main Credits")
     cf:Credit("Luxt: UI library")
