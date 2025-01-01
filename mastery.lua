@@ -1,6 +1,8 @@
+game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
 local function load()
-	game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
-	wait(5)
+	repeat
+		wait()
+	until game.Players.LocalPlayer.Character
 	
 	local w = Workspace
 	
@@ -11,7 +13,7 @@ local function load()
 	
 	local tweensvc = game:GetService("TweenService")
 	
-	local force = Instance.new("BodyVelocity")
+	local force = Instance.new("BodyVelocity",root)
 	force.Name = "Force"
 	force.MaxForce = Vector3.new(1000000,100000000,1000000000)
 	
