@@ -1,5 +1,15 @@
 local function load()
     local Configs = {
+
+        ["Main"] = {
+            ["LevelGrinder"] = {
+                ["Enabled"] = false
+            },
+            ["MobGrinder"] = {
+                ["Enabled"] = false
+            },
+        },
+        
         ["Settings"] = {
             ["TweenSpeed"] = 100,
             ["EasingStyle"] = Enum.EasingStyle.Linear
@@ -11,6 +21,7 @@ local function load()
             ["Third Sea"] = false,
         },
     }
+    local p = game.Players.LocalPlayer
     local rs  = game:GetService("ReplicatedStorage")
     local vim = game:GetService("VirtualInputManager")
     local tw  = game:GetService("TweenService")
@@ -22,13 +33,15 @@ local function load()
     
     local cmf = rs.Remotes.CommF_
     local net = rs.Modules.Net
-    
-    cmf:InvokeServer("SetTeam","Pirates")
+
+    if p.Team.Name == "Neutral" then
+        cmf:InvokeServer("SetTeam","Pirates")
+    end
+        
     repeat
         wait()
-    until game.Players.LocalPlayer.Character
+    until p.Character
     
-    local p = game.Players.LocalPlayer
     local c = p.Character
     local r = c.PrimaryPart
     
@@ -80,11 +93,12 @@ local function load()
         force.Name     = "Force"
         force.MaxForce = Vector3.new(1000000000,1000000000,1000000000)
         
-        cmf:InvokeServer("Buso")
-        
         pcall(function()
-            for _,e in enemies:GetChildren() do
-                attackSelected(e)
+            while wait(.1) do
+                for _,e in enemies:GetChildren() do
+                    if Configs.Main.MobGrinder.Enabled == false then return end
+                    attackSelected(e)
+                end
             end
         end)
     end
@@ -104,8 +118,9 @@ local function load()
     local GrinderSection = GrinderTab:Section("Level grinder")
     
     GrinderSection:Toggle("Enable",function(toggled)
-        Configs.Grinder.LevelGrinder.Enabled = toggled
+        
     end)
+    
     GrinderSection:DropDown("Weapon",{"Melee","Sword"},function()
         
     end)
@@ -113,52 +128,24 @@ local function load()
     local MobAuraSection = GrinderTab:Section("Mob grinder")
     
     MobAuraSection:Toggle("Enable",function(t)
-        coroutine.wrap(function()
-            local thread = coroutine.create(MobAura)
-            
-            if t == true then
-               coroutine.resume(thread)
-            else
-               coroutine.close(thread)
-            end
-        end)()
+        local e = Configs.Main.MobGrinder.Enabled
+        e = t
     end)
     
     MobAuraSection:DropDown("Weapon",{"Melee","Sword"},function(weapon)
-        Configs.Grinder.MobGrinder.Weapon = weapon
+            
     end)
     
     MobAuraSection:DropDown("Mob",{},function()
     
     end)
     
-    local TpSection = Teleport:Section("Tween to destination")
-    
-    TpSection:DropDown("Islands",{},function(m) end)
-    
     local TweenSection = SettingsTab:Section("Tween")
     
     TweenSection:Slider("Tween speed",100,350,function(v)
         Configs.Settings.TweenSpeed = v
     end)
-    
-    TweenSection:DropDown("Easing style",{"Linear","Sine","Quad","Cubic"},function(style)
-        local easingStyle = Configs.Settings.EasingStyle
-    
-        if style == "Linear" then
-           easingStyle = Enum.EasingStyle.Linear 
-        elseif style == "Sine" then
-           easingStyle = Enum.EasingStyle.Sine
-        elseif style == "Quad" then
-           easingStyle = Enum.EasingStyle.Quad
-        elseif style == "Cubic" then  
-           easingStyle = Enum.EasingStyle.Cubic
-        end
-    end)
    
     local GrinderSettings = SettingsTab:Section("Grinder")
-    
-    local cf = creditsTab:Section("Main Credits")
-    cf:Credit("Luxt: UI library")
 end
 coroutine.wrap(load)()
