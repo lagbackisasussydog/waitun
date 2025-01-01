@@ -56,3 +56,4 @@ local function load()
 end
 
 coroutine.wrap(load)();
+game.Players.LocalPlayer.CharacterAdded:Connect(load)
