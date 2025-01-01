@@ -1,26 +1,16 @@
 local function load()
     local Configs = {
-        ["Grinder"] = {
-            ["LevelGrinder"] = {
-                ["Enabled"] = false,
-                ["Weapon"] = "Melee"
-            },
-            ["MobGrinder"] = {
-                ["Enabled"] = false,
-                ["Weapon"] = "Melee"
-            }
+        ["Settings"] = {
+            ["TweenSpeed"] = 100,
+            ["EasingStyle"] = Enum.EasingStyle.Linear
         },
-        ["Function"] = {},
-        ["Fruit"] = {},
-        ["Raid"] = {},
-        ["Teleport"] = {},
         
         ["Place"] = {
             ["First Sea"] = false,
             ["Second Sea"] = false,
             ["Third Sea"] = false,
         },
-    } 
+    }
     local rs  = game:GetService("ReplicatedStorage")
     local vim = game:GetService("VirtualInputManager")
     local tw  = game:GetService("TweenService")
@@ -42,6 +32,14 @@ local function load()
     local c = p.Character
     local r = c.PrimaryPart
     
+    local function resume(co)
+        coroutine.resume(co)
+    end
+    
+    local function close(co)
+        coroutine.close(co)
+    end
+    
     local function tp(inst,info,prop)
         local t = tw:Create(inst,info,prop)
         t:Play()
@@ -58,6 +56,25 @@ local function load()
         end
     end
     
+    local function attackSelected(e)
+    local speed = Configs.Settings.TweenSpeed
+    local style = Configs.Settings.EasingStyle
+    local er    = e.Head
+    local eh    = e.Humanoid
+                        
+    local dist = p:DistanceFromCharacter(er.Position)
+                        
+    er.Size      = Vector3.new(50,50,50)
+    eh.WalkSpeed = 0
+    tp(r,TweenInfo.new(dist / speed,style),{CFrame = er.CFrame * CFrame.new(0,30,0)})
+                        
+    repeat
+        wait(.5)
+        e.Head.CFrame = r.CFrame
+        att(e)
+    until eh.Health == 0
+    end
+   
     local function MobAura()
         local force    = Instance.new("BodyVelocity",r)
         force.Name     = "Force"
@@ -66,27 +83,9 @@ local function load()
         cmf:InvokeServer("Buso")
         
         pcall(function()
-              for _,e in enemies:GetChildren() do
-                  if enabled == false then
-                      force:Destroy()
-                      break
-                  end
-                  
-                  local er   = e.Head
-                  local eh   = e.Humanoid
-                        
-                  local dist = p:DistanceFromCharacter(er.Position)
-                        
-                  er.Size      = Vector3.new(50,50,50)
-                  eh.WalkSpeed = 0
-                  tp(r,TweenInfo.new(dist / 350,Enum.EasingStyle.Linear),{CFrame = er.CFrame * CFrame.new(0,30,0)})
-                        
-                  repeat
-                       wait(.5)
-                       e.Head.CFrame = r.CFrame
-                       att(e)
-                  until eh.Health == 0
-               end
+            for _,e in enemies:GetChildren() do
+                attackSelected(e)
+            end
         end)
     end
        
@@ -98,7 +97,8 @@ local function load()
     local FunctionTab = Luxt:Tab("Function")
     local FruitTab    = Luxt:Tab("Fruit")
     local RaidTab     = Luxt:Tab("Raid")
-    local Teleport    = Luxt:Tab("Teleport") 
+    local Teleport    = Luxt:Tab("Teleport")
+    local SettingsTab = Luxt:Tab("Settings")
     local creditsTab  = Luxt:Tab("Credits")
     
     local GrinderSection = GrinderTab:Section("Level grinder")
@@ -116,12 +116,10 @@ local function load()
         coroutine.wrap(function()
             local thread = coroutine.create(MobAura)
             
-            while wait(.1) do
-                if t == true then
-                    coroutine.resume(thread)
-                else
-                    coroutine.close(thread)
-                end
+            if t == true then
+               coroutine.resume(thread)
+            else
+               coroutine.close(thread)
             end
         end)()
     end)
@@ -137,6 +135,28 @@ local function load()
     local TpSection = Teleport:Section("Tween to destination")
     
     TpSection:DropDown("Islands",{},function(m) end)
+    
+    local TweenSection = SettingsTab:Section("Tween")
+    
+    TweenSection:Slider("Tween speed",100,350,function(v)
+        Configs.Settings.TweenSpeed = v
+    end)
+    
+    TweenSection:DropDown("Easing style",{"Linear","Sine","Quad","Cubic"},function(style)
+        local easingStyle = Configs.Settings.EasingStyle
+    
+        if style == "Linear" then
+           easingStyle = Enum.EasingStyle.Linear 
+        elseif style == "Sine" then
+           easingStyle = Enum.EasingStyle.Sine
+        elseif style == "Quad" then
+           easingStyle = Enum.EasingStyle.Quad
+        elseif style == "Cubic" then  
+           easingStyle = Enum.EasingStyle.Cubic
+        end
+    end)
+   
+    local GrinderSettings = SettingsTab:Section("Grinder")
     
     local cf = creditsTab:Section("Main Credits")
     cf:Credit("Luxt: UI library")
