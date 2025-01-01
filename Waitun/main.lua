@@ -125,6 +125,10 @@ local function load()
                  Duration = 5,
                  Button1 = "ok"
             })
+        else
+            pcall(function()
+                
+            end)
         end
     end)
     
@@ -145,8 +149,9 @@ local function load()
     GrinderSection:Toggle("Enable",function(toggled)
         
     end)
-    
-    GrinderSection:DropDown("Weapon",{"Melee","Sword"},function()
+
+    GrinderSection:Label("Weapon")
+    GrinderSection:DropDown("Melee",{"Melee","Sword"},function()
         
     end)
     
@@ -156,9 +161,10 @@ local function load()
         local e = Configs.Main.MobGrinder.Enabled
         e = t
     end)
-    
-    MobAuraSection:DropDown("Weapon",{"Melee","Sword"},function(weapon)
-            
+
+    MobAuraSection:Label("Weapon")
+    MobAuraSection:DropDown("Melee",{"Melee","Sword"},function(weapon)
+        
     end)
     
     MobAuraSection:DropDown("Mob",{},function()
