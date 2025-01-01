@@ -8,6 +8,11 @@ local function load()
             ["MobGrinder"] = {
                 ["Enabled"] = false
             },
+
+            ["Functions"] = {
+                ["Buso"] = false,
+                ["AutoChest"] = false
+            },
         },
         
         ["Settings"] = {
@@ -44,14 +49,6 @@ local function load()
     
     local c = p.Character
     local r = c.PrimaryPart
-    
-    local function resume(co)
-        coroutine.resume(co)
-    end
-    
-    local function close(co)
-        coroutine.close(co)
-    end
     
     local function tp(inst,info,prop)
         local t = tw:Create(inst,info,prop)
@@ -92,17 +89,20 @@ local function load()
         local force    = Instance.new("BodyVelocity",r)
         force.Name     = "Force"
         force.MaxForce = Vector3.new(1000000000,1000000000,1000000000)
+
+        if Configs.Main.MobGrinder.Enabled == false then force:Destroy() return end
         
         pcall(function()
             while wait(.1) do
                 for _,e in enemies:GetChildren() do
-                    if Configs.Main.MobGrinder.Enabled == false then return end
                     attackSelected(e)
                 end
             end
         end)
+
+        p.CharacterAdded:Connect(MobAura)
     end
-       
+    
     local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
 
     local Luxt = Luxtl.CreateWindow("Waitun - " .. tostring(identifyexecutor()), 6105620301)
@@ -139,13 +139,39 @@ local function load()
     MobAuraSection:DropDown("Mob",{},function()
     
     end)
+
+    local FunctionSection = FunctionTab:Section("General")
+    FunctionSection:Toggle("Enable Armanent",function(t)
+        p.CharacterAdded:Connect(function(char)
+            repeat wait() until char
+
+            if Configs.Main.Functions.Buso == true then
+                cmf:InvokeServer("Buso")
+            end        
+        end)
+    end)
     
     local TweenSection = SettingsTab:Section("Tween")
-    
-    TweenSection:Slider("Tween speed",100,350,function(v)
+
+    TweenSection:Label("Tween speed")    
+    TweenSection:Slider("",100,350,function(v)
         Configs.Settings.TweenSpeed = v
     end)
-   
+
+    local MobSection = SettingsTab:Section("Mob")
+    TweenSection:Toggle("Group mob",function(t)
+
+    end)
+
+    TweenSection:Toggle("Anchor mob",function(t) 
+        
+    end)
+
+    local Misc = SettingsTab:Section("Miscellaneous")
+    Misc:Toggle("KillInsult",function(t)
+        
+    end)
+    
     local GrinderSettings = SettingsTab:Section("Grinder")
 end
 coroutine.wrap(load)()
