@@ -50,6 +50,12 @@ local function load()
     
     local function att(model)
         vim:SendMouseButtonEvent(0,0,0,true,game,1)
+        
+        for _,part in model:GetChildren() do
+           if part:IsA("BasePart") then
+               net["RE/RegisterHit"]:FireServer(part,{})
+           end
+        end
     end
     
     local function MobAura()
@@ -61,8 +67,13 @@ local function load()
         
         pcall(function()
               for _,e in enemies:GetChildren() do
-                  local er = e.Head
-                  local eh = e.Humanoid
+                  if enabled == false then
+                      force:Destroy()
+                      break
+                  end
+                  
+                  local er   = e.Head
+                  local eh   = e.Humanoid
                         
                   local dist = p:DistanceFromCharacter(er.Position)
                         
@@ -77,7 +88,6 @@ local function load()
                   until eh.Health == 0
                end
         end)
-    
     end
        
     local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
@@ -103,12 +113,17 @@ local function load()
     local MobAuraSection = GrinderTab:Section("Mob grinder")
     
     MobAuraSection:Toggle("Enable",function(t)
-        local thread = MobAura()
-        if t == true then
+        coroutine.wrap(function()
+            local thread = coroutine.create(MobAura)
             
-        else
-            
-        end
+            while wait(.1) do
+                if t == true then
+                    coroutine.resume(thread)
+                else
+                    coroutine.close(thread)
+                end
+            end
+        end)()
     end)
     
     MobAuraSection:DropDown("Weapon",{"Melee","Sword"},function(weapon)
