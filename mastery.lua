@@ -11,19 +11,14 @@ local function load()
 	
 	local tweensvc = game:GetService("TweenService")
 	
-	local att         = Instance.new("Attachment",root)
-	local align       = Instance.new("AlignPosition",att)
-	align.Mode        = Enum.PositionAlignmentMode.OneAttachment
-	align.Attachment0 = att
-	align.MaxForce    = math.huge
-	align.MaxVelocity = math.huge
-	align.Position    = root.Position
+	local force = Instance.new("BodyVelocity")
+	force.Name = "Force"
+	force.MaxForce = Vector3.new(1000000,100000000,1000000000)
 	
 	function tween(inst,info,property)
 	    local track = tweensvc:Create(inst,info,property)
 	    track:Play()
 	    track.Completed:Wait()
-	    align.Position = root.Position
 	end
 	
 	function fireEvent(model)
@@ -36,6 +31,12 @@ local function load()
 	
 	game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Buso")
 	char.Humanoid:EquipTool(plr.Backpack:GetChildren()[1])
+
+	for _,part in char:GetChildren() do
+		if part:IsA("BasePart") then
+			part.CanCollide = false
+		end
+	end
 	
 	while task.wait(.1) do
 	    pcall(function()
@@ -44,10 +45,11 @@ local function load()
 	            local eroot = v:FindFirstChild("Head")
 	
 	            eroot.Anchored = true
-	            tween(root,TweenInfo.new(2,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
+	            tween(root,TweenInfo.new(plr:DistanceFromCharacter(eroot.Position) / 350,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
 	            eroot.Size = Vector3.new(50,50,50)
 	            repeat
-	                mouse1click()
+			wait(.5)
+	                game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,1)
 	                fireEvent(v)
 	            until hum.Health == 0
 	        end
