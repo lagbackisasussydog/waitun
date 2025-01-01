@@ -3,10 +3,12 @@ local function load()
 
         ["Main"] = {
             ["LevelGrinder"] = {
-                ["Enabled"] = false
+                ["Enabled"] = false,
+                ["Weapon"] = "Melee",
             },
             ["MobGrinder"] = {
-                ["Enabled"] = false
+                ["Enabled"] = false,
+                ["Weapon"] = "Melee",
             },
 
             ["Functions"] = {
@@ -49,6 +51,18 @@ local function load()
     
     local c = p.Character
     local r = c.PrimaryPart
+
+    local function setPartCollide(e)
+        if e then
+            for _,part in c:GetChildren() do   
+                if part:IsA("BasePart") then part.CanCollide = false end
+            end
+        else
+            for _,part in c:GetChildren() do   
+                if part:IsA("BasePart") then part.CanCollide = true end
+            end
+        end
+    end
     
     local function tp(inst,info,prop)
         local t = tw:Create(inst,info,prop)
@@ -67,30 +81,30 @@ local function load()
     end
     
     local function attackSelected(e)
-    local speed = Configs.Settings.TweenSpeed
-    local style = Configs.Settings.EasingStyle
-    local er    = e.Head
-    local eh    = e.Humanoid
-                        
-    local dist = p:DistanceFromCharacter(er.Position)
-                        
-    er.Size      = Vector3.new(50,50,50)
-    eh.WalkSpeed = 0
-    tp(r,TweenInfo.new(dist / speed,style),{CFrame = er.CFrame * CFrame.new(0,30,0)})
-                        
-    repeat
-        wait(.5)
-        e.Head.CFrame = r.CFrame
-        att(e)
-    until eh.Health == 0
+        local speed = Configs.Settings.TweenSpeed
+        local er = e.Head
+        local eh = e.Humanoid
+                            
+        local dist = p:DistanceFromCharacter(er.Position)
+                            
+        er.Size = Vector3.new(50,50,50)
+        eh.WalkSpeed = 0
+        tp(r,TweenInfo.new(dist / speed,style),{CFrame = er.CFrame * CFrame.new(0,30,0)})
+                            
+        repeat
+            wait(.5)
+            e.Head.CFrame = r.CFrame
+            att(e)
+        until eh.Health == 0
     end
    
     local function MobAura()
+        setPartCollide(true)
         local force    = Instance.new("BodyVelocity",r)
         force.Name     = "Force"
         force.MaxForce = Vector3.new(1000000000,1000000000,1000000000)
 
-        if Configs.Main.MobGrinder.Enabled == false then force:Destroy() return end
+        if Configs.Main.MobGrinder.Enabled == false then setPartCollide(false) force:Destroy() return end
         
         pcall(function()
             while wait(.1) do
@@ -102,6 +116,17 @@ local function load()
 
         p.CharacterAdded:Connect(MobAura)
     end
+
+    local function AutoChest()
+        if Configs.Main.LevelGrinder == true or Configs.Main.MobGrinder == true then
+            game.StarterGui:SetCore("SendNotification",{
+                 Title = "Notification",
+                 Text = "This function is NOT STACKABLE. please try turn off every grinder function",
+                 Duration = 5,
+                 Button1 = "ok"
+            })
+        end
+    end)
     
     local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
 
