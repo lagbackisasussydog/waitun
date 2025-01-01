@@ -125,12 +125,8 @@ local function load()
                  Duration = 5,
                  Button1 = "ok"
             })
-        else
-            pcall(function()
-                
-            end)
         end
-    end)
+    end
     
     local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
 
