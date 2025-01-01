@@ -41,7 +41,7 @@ local function load()
 	    pcall(function()
 	        for i,v in pairs(es:GetChildren()) do
 	            local hum = v.Humanoid
-	            local eroot = v:FindFirstChild("HumanoidRootPart")
+	            local eroot = v:FindFirstChild("Head")
 	
 	            eroot.Anchored = true
 	            tween(root,TweenInfo.new(2,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
