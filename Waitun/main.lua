@@ -17,7 +17,7 @@ local function load()
         
         ["Settings"] = {
             ["TweenSpeed"] = 100,
-            ["EasingStyle"] = Enum.EasingStyle.Linear
+            ["GroupMob"] = false
         },
         
         ["Place"] = {
@@ -154,7 +154,7 @@ local function load()
     local TweenSection = SettingsTab:Section("Tween")
 
     TweenSection:Label("Tween speed")    
-    TweenSection:Slider("",100,350,function(v)
+    TweenSection:Slider("",1,350,function(v)
         Configs.Settings.TweenSpeed = v
     end)
 
