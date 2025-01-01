@@ -103,11 +103,10 @@ local function load()
         local force    = Instance.new("BodyVelocity",r)
         force.Name     = "Force"
         force.MaxForce = Vector3.new(1000000000,1000000000,1000000000)
-
-        if Configs.Main.MobGrinder.Enabled == false then setPartCollide(false) force:Destroy() return end
         
         pcall(function()
             while wait(.1) do
+                if Configs.Main.MobGrinder.Enabled == false then setPartCollide(false) force:Destroy() return end
                 for _,e in enemies:GetChildren() do
                     attackSelected(e)
                 end
