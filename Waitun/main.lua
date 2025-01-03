@@ -1,9 +1,10 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+
 local function load()
     local w = workspace
     local enemies = w.Enemies
     local map = w.Map
 
-    local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
     local tw = game.TweenService
     local vim = game:GetService("VirtualInputManager")
 
@@ -38,7 +39,7 @@ local function load()
 
     local function anchor(state)
         if state then
-            local f = Instance.new("BodyVelocity",r)
+            local f = Instance.new("BodyVelocity",p.Character.PrimaryPart)
             f.Name = "F"
             f.MaxForce = v3(1000000,10000000000,10000000000)
         else
@@ -46,15 +47,12 @@ local function load()
         end
     end
 
-    local c = p.Character
-    local r = c.PrimaryPart
-
     local window = Fluent:CreateWindow({
         Title = "Waitun - " .. tostring(identifyexecutor()),
         SubTitle  = "By lgb",
         TabWidth = 200,
         Size = UDim2.fromOffset(500, 350),
-        Acrylic = true,
+        Acrylic = false,
         Theme = "Aqua",
         MinimizeKey = Enum.KeyCode.LeftAlt,
     })
@@ -62,12 +60,12 @@ local function load()
     local opt = Fluent.Options
 
     local Tabs = {
-        General = window:AddTab({Title = "General",Icon = "house"}),
-        Grinder = window:AddTab({Title = "Grinder",Icon = "grip"}),
-        Functions = window:AddTab({Title = "Functions", Icon = "arrow-up"}),
-        Travel = window:AddTab({Title = "Travel",Icon = "earth"}),
-        Fruit = window:AddTab({Title = "Fruit",Icon = "apple"}),
-        Settings = window:AddTab({Title = "Settings",Icon = "settings"}),
+        General = window:AddTab({Title = "General",Icon = ""}),
+        Grinder = window:AddTab({Title = "Grinder",Icon = ""}),
+        Functions = window:AddTab({Title = "Functions", Icon = ""}),
+        Travel = window:AddTab({Title = "Travel",Icon = ""}),
+        Fruit = window:AddTab({Title = "Fruit",Icon = ""}),
+        Settings = window:AddTab({Title = "Settings",Icon = ""}),
     }
 
     local LevelGrinder = Tabs.Grinder:AddToggle("LevelGrinder",{Title = "Enable level grinder", Default = false})
@@ -81,25 +79,23 @@ local function load()
 
     MobGrinder:OnChanged(function()
         while opt.MobGrinder.Value do
-                local co = coroutine.create(function()
-                    for _,e in pairs(enemies:GetChildren()) do
-                        local head = e.Head
-                        local hum = e.Humanoid
-                        local dist = p:DistanceFromCharacter(head.Position)
+            local c = p.Character
+            local r = c.PrimaryPart
+            for _,e in pairs(enemies:GetChildren()) do
+                local head = e.Head
+                local hum = e.Humanoid
+                local dist = p:DistanceFromCharacter(head.Position)
 
-                        anchor(true)
-                        head.Size = v3(50,50,50)
-                        tp(r,TweenInfo.new(dist / 350),{CFrame = head.CFrame})
+                anchor(true)
+                head.Size = Vector3.new(50,50,50)
+                tp(r,TweenInfo.new(dist / 350),{CFrame = head.CFrame})
 
-                        repeat
-                            wait(.1)
-                            att()
-                        until hum.Heath == 0
-                    end
-                end)
-
-                wait(5)
-                coroutine.resume(co)
+                repeat
+                    wait(.5)
+                    e:PivotTo(r.CFrame)
+                    att()
+                until hum.Heath == 0
+            end
         end
     end)
 
