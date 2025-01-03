@@ -16,7 +16,7 @@ local function load()
         ["Map"] = "",
         ["Settings"] = {
             ["TweenSpeed"] = 275,
-            ["Mode"] = "Vim"
+            ["Mode"] = "Virtual input manager"
         }
     }
 
@@ -107,6 +107,7 @@ local function load()
         while Configs.MobGrinder do
             pcall(function()
                 if Configs.LevelGrinder then Configs.MobGrinder = false end
+                local speed = Configs.Settings.TweenSpeed
                 local c = p.Character
                 local r = c.PrimaryPart
                 for _,e in pairs(enemies:GetChildren()) do
@@ -116,10 +117,10 @@ local function load()
     
                     anchor(true)
                     head.Size = Vector3.new(50,50,50)
-                    tp(r,TweenInfo.new(dist / 350),{CFrame = head.CFrame})
+                    tp(r,TweenInfo.new(dist / speed),{CFrame = head.CFrame})
     
                     repeat
-                        wait(.5)
+                        wait(.1)
                         e:PivotTo(r.CFrame)
                         att()
                     until hum.Heath == 0
