@@ -1,5 +1,24 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local function load()
+    local Configs = {
+        ["LevelGrinder"] = {
+            ["Enabled"] = false,
+        },
+        ["MobGrinder"] = {
+            ["Enabled"] = false,
+        },
+        ["AutoBuso"] = {
+            ["Enabled"] = false,
+        },
+        ["AutoChest"] = {
+            ["Enabled"] = false,
+        },
+        ["Map"] = "",
+        ["Settings"] = {
+            ["TweenSpeed"] = 275
+        }
+    }
+
     local w = workspace
     local enemies = w.Enemies
     local map = w.Map
@@ -77,7 +96,9 @@ local function load()
     opt.LevelGrinder:SetValue(false)
 
     MobGrinder:OnChanged(function()
-        while opt.MobGrinder.Value do
+        Configs.MobGrinder = opt.MobGrinder.Value
+        while Configs.MobGrinder do
+            if Configs.LevelGrinder then Configs.MobGrinder = false end
             local c = p.Character
             local r = c.PrimaryPart
             for _,e in pairs(enemies:GetChildren()) do
