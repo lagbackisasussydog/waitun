@@ -98,24 +98,26 @@ local function load()
     MobGrinder:OnChanged(function()
         Configs.MobGrinder = opt.MobGrinder.Value
         while Configs.MobGrinder do
-            if Configs.LevelGrinder then Configs.MobGrinder = false end
-            local c = p.Character
-            local r = c.PrimaryPart
-            for _,e in pairs(enemies:GetChildren()) do
-                local head = e.Head
-                local hum = e.Humanoid
-                local dist = p:DistanceFromCharacter(head.Position)
-
-                anchor(true)
-                head.Size = Vector3.new(50,50,50)
-                tp(r,TweenInfo.new(dist / 350),{CFrame = head.CFrame})
-
-                repeat
-                    wait(.5)
-                    e:PivotTo(r.CFrame)
-                    att()
-                until hum.Heath == 0
-            end
+            pcall(function()
+                if Configs.LevelGrinder then Configs.MobGrinder = false end
+                local c = p.Character
+                local r = c.PrimaryPart
+                for _,e in pairs(enemies:GetChildren()) do
+                    local head = e.Head
+                    local hum = e.Humanoid
+                    local dist = p:DistanceFromCharacter(head.Position)
+    
+                    anchor(true)
+                    head.Size = Vector3.new(50,50,50)
+                    tp(r,TweenInfo.new(dist / 350),{CFrame = head.CFrame})
+    
+                    repeat
+                        wait(.5)
+                        e:PivotTo(r.CFrame)
+                        att()
+                    until hum.Heath == 0
+                end
+            end)
         end
     end)
 
