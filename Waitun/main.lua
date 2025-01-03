@@ -1,5 +1,4 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-
 local function load()
     local w = workspace
     local enemies = w.Enemies
@@ -60,7 +59,6 @@ local function load()
     local opt = Fluent.Options
 
     local Tabs = {
-        General = window:AddTab({Title = "General",Icon = ""}),
         Grinder = window:AddTab({Title = "Grinder",Icon = ""}),
         Functions = window:AddTab({Title = "Functions", Icon = ""}),
         Travel = window:AddTab({Title = "Travel",Icon = ""}),
@@ -68,6 +66,7 @@ local function load()
         Settings = window:AddTab({Title = "Settings",Icon = ""}),
     }
 
+    -- Grinder
     local LevelGrinder = Tabs.Grinder:AddToggle("LevelGrinder",{Title = "Enable level grinder", Default = false})
     local MobGrinder = Tabs.Grinder:AddToggle("MobGrinder",{Title = "Enable mob grinder",Default = false})
 
@@ -100,6 +99,18 @@ local function load()
     end)
 
     opt.MobGrinder:SetValue(false)
+
+    -- Functions
+    local AutoBuso = Tabs.Functions:AddToggle("AutoBuso",{Title = "You want to press J?",Default = false})
+    local AutoChest = Tabs.Functions:AddToggle("ChestCollector",{Title = "Chest collector",Default = false})
+
+    -- Travel
+    local Tween = Tabs.Travel:AddButton({Title = "Tween",Description = "Tween to selected island"})
+    local dropdown = TabsTravel:AddDropDown("Map",{Title = "Island",Values = table.concat(map:GetChildren(), ",")})
+
+    -- Fruit
+    -- Settings 
+    local Speed = Tabs.Settings:AddSlider("TwSpeed",{Title = "Tween speed",Description = "Adjust tween speed",Defaule = 275,Min = 100,Max = 350,Rounding = 1})
 
     Fluent:Notify({
         Title = "Waitun",
