@@ -15,7 +15,8 @@ local function load()
         },
         ["Map"] = "",
         ["Settings"] = {
-            ["TweenSpeed"] = 275
+            ["TweenSpeed"] = 275,
+            ["Mode"] = "Vim"
         }
     }
 
@@ -25,6 +26,7 @@ local function load()
 
     local tw = game.TweenService
     local vim = game:GetService("VirtualInputManager")
+    local vu = game:GetService("VirtualUser")
 
     local p = game.Players.LocalPlayer
 
@@ -41,7 +43,12 @@ local function load()
     end
 
     local function att()
-        vim:SendMouseButtonEvent(0,0,0,true,game,1)
+        if Configs.Settings.Mode = "Virtual input Manager" then
+            vim:SendMouseButtonEvent(0,0,0,true,game,1)
+        elseif Configs.Settings.Mode = "Virtual user" then
+            vu:Button1Up(Vector2.new(0,0))
+        end
+            
     end
 
     local function nocdtp(inst,info,prop)
@@ -124,16 +131,22 @@ local function load()
     opt.MobGrinder:SetValue(false)
 
     -- Functions
+    local label = Tabs.Function:AddParagraph({Title = "⚠WARNING",Content = "Everything is not stackable with grinder"})
     local AutoBuso = Tabs.Functions:AddToggle("AutoBuso",{Title = "You want to press J?",Default = false})
     local AutoChest = Tabs.Functions:AddToggle("ChestCollector",{Title = "Chest collector",Default = false})
 
     -- Travel
     local Tween = Tabs.Travel:AddButton({Title = "Tween",Description = "Tween to selected island"})
-    local dropdown = TabsTravel:AddDropDown("Map",{Title = "Island",Values = table.concat(map:GetChildren(), ",")})
+    local dropdown = TabsTravel:AddDropDown("Map",{Title = "Island",Values = table.concat(map:GetChildren()), ",")})
 
     -- Fruit
     -- Settings 
     local Speed = Tabs.Settings:AddSlider("TwSpeed",{Title = "Tween speed",Description = "Adjust tween speed",Defaule = 275,Min = 100,Max = 350,Rounding = 1})
+    local Mode = Tabs.Settings:AddDropDown("mode",{Title = "Emulate mode",Values = {"Virtual input manager","Virtual user"},Default = 1})
+
+    Mode:OnChanged(function() 
+        Configs.Settings.Mode = opt.Mode.Value
+    end)
 
     Fluent:Notify({
         Title = "Waitun",
