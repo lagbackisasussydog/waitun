@@ -51,6 +51,7 @@ local function load()
 	            eroot.Size = Vector3.new(50,50,50)
 	            repeat
 			wait(.5)
+			v:PivotTo(root.CFrame)
 	                game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,1)
 	                fireEvent(v)
 	            until hum.Health == 0
