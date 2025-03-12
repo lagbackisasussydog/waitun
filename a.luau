@@ -1,7 +1,6 @@
 local beta = getgenv().Kaitun = false
 
 local function Initialize()
-    if game.CoreGui:FindFirstChild("Gui") then game.CoreGui:FindFirstChild("Gui").Parent = nil end
     local p = game.Players.LocalPlayer
     local w = workspace
     local rs = game:GetService("ReplicatedStorage")
