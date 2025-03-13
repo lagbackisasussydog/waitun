@@ -9,14 +9,24 @@ local function load()
 	local es = w:WaitForChild("Enemies")
 	
 	local tweensvc = game:GetService("TweenService")
+
+	function Anchor(state)
+		if state then
+			local force = Instance.new("BodyVelocity",root)
+			force.Name = "Force"
+			force.MaxForce = Vector3.new(1000000,100000000,1000000000)
+			force.Velocity = Vector3.new(0,.001,0)
+		else
+			root:FindFirstChild("Force").Parent = nil
+		end
+	end
 	
-	local force = Instance.new("BodyVelocity",root)
-	force.Name = "Force"
-	force.MaxForce = Vector3.new(1000000,100000000,1000000000)
-	
-    	local gyro = Instance.new("BodyGyro",root)
-    	gyro.MaxTorque = Vector3.new(math.huge,0,math.huge)
-    	gyro.CFrame = root.CFrame
+	function AnchorMob(model)
+		local force = Instance.new("BodyVelocity",model:PrimaryPart)
+		force.Name = "Force"
+		force.MaxForce = Vector3.new(1000000,100000000,1000000000)
+		force.Velocity = Vector3.new(0,.001,0)
+	end
 
 	function tween(inst,info,property)
 	    local track = tweensvc:Create(inst,info,property)
@@ -41,32 +51,40 @@ local function load()
 	       tool = toolz
 	   end
 	end
+
+	local co = coroutine.create(function()
+		Anchor(true)
+		while auto do
+		    pcall(function()
+		        for i,v in pairs(es:GetChildren()) do
+			    if not auto then break end
+		            local hum = v.Humanoid
+		            local eroot = v:FindFirstChild("Head")
 	
-	while auto do
-	    pcall(function()
-	        for i,v in pairs(es:GetChildren()) do
-	            local hum = v.Humanoid
-	            local eroot = v:FindFirstChild("Head")
+		            tween(root,TweenInfo.new(plr:DistanceFromCharacter(eroot.Position) / 350,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
+		            eroot.Size = Vector3.new(eroot.Size.X,40,eroot.Size.Z)
+			    eroot.CanCollide = false
+			    AnchorMob(v)
+		            repeat
+				if not auto then break end
+				wait(.1)
+	                    	char.Humanoid:EquipTool(tool)
+		                game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,1)
+		                fireEvent(v)
+		            until hum.Health == 0
+		        end
+		    end)
+		end
+	end)
 
-	            tween(root,TweenInfo.new(plr:DistanceFromCharacter(eroot.Position) / 350,Enum.EasingStyle.Linear),{CFrame = eroot.CFrame * CFrame.new(0,30,0)})
-	            eroot.Size = Vector3.new(50,50,50)
-	            repeat
-			wait(.1)
-                    	char.Humanoid:EquipTool(tool)
-			v:PivotTo(root.CFrame)
-	                game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,1)
-	                fireEvent(v)
-	            until hum.Health == 0
-	        end
-	    end)
-	end
-
-	game.UserInputService.InputBegan:Connect(function(p,i)
+	game.UserInputService.InputBegan:Connect(function(i,p)
 		if p then return end
 
 		if i.KeyCode == Enum.KeyCode.LeftAlt then
 			auto = not auto
 		end
+
+		if auto then coroutine.resume(co) else Anchor(false) coroutine.close(co) end
 	end)
 end
 
