@@ -1,11 +1,8 @@
-getgenv().auto = false
+getgenv().auto = true
 local function load()
-	auto = true
 	local w = Workspace
 	
 	local plr = game.Players.LocalPlayer
-	local char = plr.Character or plr.CharacterAdded:Wait()
-	local root = char.PrimaryPart
 	local es = w:WaitForChild("Enemies")
 	
 	local tweensvc = game:GetService("TweenService")
@@ -26,6 +23,12 @@ local function load()
 		force.Name = "Force"
 		force.MaxForce = Vector3.new(1000000,100000000,1000000000)
 		force.Velocity = Vector3.new(0,.001,0)
+		local f2 = Instance.new("AlignPosition",Instance.new("Attachment",model.PrimaryPart)
+		f2.Mode = Enum.PositionAlignmentMode.OneAttachment
+		f2.Attachment0 = model.PrimaryPart.Attachment
+		f2.ApplyAtCenterOfMass = true
+		f2.MaxForce = Vector3.new(999999,999999999,9999999999)
+		f2.Position = model.PrimaryPart.Position
 	end
 
 	function tween(inst,info,property)
@@ -41,8 +44,6 @@ local function load()
 	       end
 	   end
 	end
-	
-	game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Buso")
 
 	local tool = nil
 	
@@ -55,6 +56,8 @@ local function load()
 	local co = coroutine.create(function()
 		Anchor(true)
 		while getgenv().auto do
+		    local char = plr.Character
+		    local root = char.PrimaryPart
 		    pcall(function()
 		        for i,v in pairs(es:GetChildren()) do
 			    if not auto then break end
@@ -66,7 +69,7 @@ local function load()
 			    eroot.CanCollide = false
 			    AnchorMob(v)
 		            repeat
-				if not auto then break end
+				if not getgenv().auto then break end
 				wait(.1)
 	                    	char.Humanoid:EquipTool(tool)
 		                game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,1)
@@ -76,17 +79,24 @@ local function load()
 		    end)
 		end
 	end)
+	coroutine.warp(function()
+		game.UserInputService.InputBegan:Connect(function(i,p)
+			if p then return end
+	
+			if i.KeyCode == Enum.KeyCode.LeftAlt then
+				getgenv().auto = not getgenv().auto
+			end
+	
+			if getgenv().auto then coroutine.resume(co) else Anchor(false) coroutine.close(co) end
+		end)
+	end)()
 
-	game.UserInputService.InputBegan:Connect(function(i,p)
-		if p then return end
-
-		if i.KeyCode == Enum.KeyCode.LeftAlt then
-			getgenv().auto = not getgenv().auto
-		end
-
-		if getgenv().auto then coroutine.resume(co) else Anchor(false) coroutine.close(co) end
-	end)
+	coroutine.wrap(function()
+		plr.CharacterAdded:Connect(function()
+			wait(.5)
+			game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Buso")
+		end)
+	end)()
 end
 
-game.Players.LocalPlayer.CharacterAdded:Connect(load)
 return coroutine.wrap(load)()
