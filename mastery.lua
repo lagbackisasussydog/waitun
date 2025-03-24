@@ -1,4 +1,4 @@
-local auto = _G.auto
+getgenv().auto = false
 local function load()
 	auto = true
 	local w = Workspace
@@ -54,7 +54,7 @@ local function load()
 
 	local co = coroutine.create(function()
 		Anchor(true)
-		while auto do
+		while getgenv().auto do
 		    pcall(function()
 		        for i,v in pairs(es:GetChildren()) do
 			    if not auto then break end
@@ -81,10 +81,10 @@ local function load()
 		if p then return end
 
 		if i.KeyCode == Enum.KeyCode.LeftAlt then
-			auto = not auto
+			getgenv().auto = not getgenv().auto
 		end
 
-		if auto then coroutine.resume(co) else Anchor(false) coroutine.close(co) end
+		if getgenv().auto then coroutine.resume(co) else Anchor(false) coroutine.close(co) end
 	end)
 end
 
