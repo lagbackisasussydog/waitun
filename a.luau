@@ -1,5 +1,3 @@
-local beta = getgenv().Kaitun = false
-
 local function Initialize()
     local p = game.Players.LocalPlayer
     local w = workspace
@@ -165,18 +163,6 @@ local function Initialize()
     win:CreateElement("Button",af,"Destroy").MouseButton1Up:Connect(function()
         game.CoreGui.Gui.Parent = nil
         script.Parent = nil
-    end)
-
-    win:CreateElement("Button",af,"Kaitun (not reversable)").MouseButton1Up:Connect(function()
-        local co = coroutine.create(function()
-            while beta do
-                local l = p.Level.Value
-                local c = p.Character
-                local r = c.PrimaryPart
-
-                -- later
-            end
-        end)
     end)
 
     win:CreateElement("Toggle",af,"Mastery AutoFarm").MouseButton1Up:Connect(function()
