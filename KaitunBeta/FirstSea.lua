@@ -1,4 +1,3 @@
-workspace.CurrentCamera.CameraType = Enum.CameraType.Follow
 local function Initialize()
 	local plr = game.Players.LocalPlayer
 
@@ -11,6 +10,12 @@ local function Initialize()
 	local tool = nil
 	
 	local function Init(c)
+		
+		if getgenv().FastMode == true then
+			local mod = loadstring("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/KaitunBeta/Modules/PartDestroyer.lua")()
+			mod:Destroy()
+		end
+	
 		f = Instance.new("BodyVelocity",c.PrimaryPart)
 		f.Name = "f"
 		f.P = 15000
@@ -246,6 +251,8 @@ local function Initialize()
 		task.wait()
 	end)
 end
+
+workspace.CurrentCamera.CameraType = Enum.CameraType.Follow
 
 if game.Players.LocalPlayer.Team ~= game.Teams.Pirates then
 	cm:InvokeServer("SetTeam","Pirates")
