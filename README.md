@@ -11,7 +11,7 @@ But anyways, this script is open-source so feel free to skid
 Here's the script: 
 
 ``` lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lagbackisasussydog/waitun/refs/heads/main/mastery.lua"))()
+ we close
 ```
 
 ---
